@@ -7,11 +7,10 @@ use App\Models\Firestation;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $caserne = Firestation::all();
+        $caserne = Firestation::where('code', $request->attributes->get('code'))->first();
 
-        dd($caserne);
         // Affiche la page d'accueil (le middleware isLogin vérifie déjà la session)
         return view('home', compact('caserne'));
     }

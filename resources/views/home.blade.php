@@ -4,6 +4,15 @@
 </head>
 
 <body>
-<h1>{{ $caserne }}</h1>
+
+{{-- Ici on va avoir deux choix : Retours d'inter ou Vérificaiton de l'engin--}}
+<div class="container">
+    <h1>Phramarcie du Centre de secours de {{ $caserne->city }}</h1>
+
+    <div class="row">
+        <a href="/return-inter">Retours d'intervention</a>
+        <a href="/caserne/{{ $caserne->id }}/engins">Vérification des engins</a>
+    </div>
+</div>
 </body>
 </html>
