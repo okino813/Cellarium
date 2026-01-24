@@ -61,6 +61,7 @@ class LoginController extends Controller
             if ($admin && Hash::check($request->password, $admin->password)) {
                 // Stocke le code et le prénom en session
                 $request->session()->put('code', $request->code);
+                $request->session()->put('idAdmin', $admin->id);
                 $request->session()->put('email', $request->email);
                 $request->session()->put('is_admin', true);
 

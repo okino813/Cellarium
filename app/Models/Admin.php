@@ -10,7 +10,7 @@ class Admin extends Model
     use HasFactory;
     protected $table = 'admins';
     protected $fillable = ['firstname', 'lastname', 'email', 'password', "firestation_id"];
-    public function firestations(){
+    public function firestation(){
         return $this->belongsTo(Firestation::class);
     }
 }

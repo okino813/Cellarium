@@ -7,6 +7,7 @@ use App\Http\Middleware\isLogin;
 use App\Http\Controllers\InterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ItemController as AdminItemController;
+use App\Http\Controllers\Admin\SourceController as AdminsourceController;
 use App\Http\Middleware\isAdmin;
 
 Route::middleware([isLogin::class])->group(function (){
@@ -17,12 +18,24 @@ Route::middleware([isLogin::class])->group(function (){
 
 Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin', [AdminController::class, 'index'])->name("admin.index");
+
+    // Crud Item
     Route::get('/admin/items', [AdminItemController::class, 'index'])->name("admin.items.index");
     Route::get('/admin/items/create', [AdminItemController::class, 'create'])->name("admin.items.create");
     Route::post('/admin/items/store', [AdminItemController::class, 'store'])->name("admin.items.store");
     Route::get('/admin/items/edit/{id}', [AdminItemController::class, 'edit'])->name("admin.items.edit");
     Route::post('/admin/items/update/{id}', [AdminItemController::class, 'update'])->name("admin.items.update");
     Route::get('/admin/items/delete/{id}', [AdminItemController::class, 'destroy'])->name("admin.items.delete");
+
+    // Crud Source
+    Route::get('/admin/sources', [AdminsourceController::class, 'index'])->name("admin.sources.index");
+    Route::get('/admin/sources/create', [AdminsourceController::class, 'create'])->name("admin.sources.create");
+    Route::post('/admin/sources/store', [AdminsourceController::class, 'store'])->name("admin.sources.store");
+    Route::get('/admin/sources/edit/{id}', [AdminsourceController::class, 'edit'])->name("admin.sources.edit");
+    Route::post('/admin/sources/update/{id}', [AdminsourceController::class, 'update'])->name("admin.sources.update");
+    Route::get('/admin/sources/delete/{id}', [AdminsourceController::class, 'destroy'])->name("admin.sources.delete");
+
+
 });
 
 // Routes publiques (accessibles sans session)
