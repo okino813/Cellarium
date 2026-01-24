@@ -10,6 +10,6 @@ class InterController extends Controller
     public function index(){
         $items = Item::all();
 
-        return view('inter', compact('items'));
+        return view('front.inter', compact('items'));
     }
 }

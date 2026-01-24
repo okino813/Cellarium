@@ -27,11 +27,17 @@ class isLogin
             // On récupère le firestation du code de session
             $firestation = Firestation::where('code', $request->session()->get('code'))->first();
 
-            if ($request->session()->get('code') == $firestation->code && $request->session()->get('firstname') !== null) {
-                // On ajoute le code dans le return
-                $request->attributes->add(['code' => $firestation->code]);
-                $request->attributes->add(['firstname' => $request->session()->get('firstname')]);
-                return $next($request); // Session valide : on continue
+            try {
+
+
+                if ($request->session()->get('code') == $firestation->code && $request->session()->get('firstname') !== null) {
+                    // On ajoute le code dans le return
+                    $request->attributes->add(['code' => $firestation->code]);
+                    $request->attributes->add(['firstname' => $request->session()->get('firstname')]);
+                    return $next($request); // Session valide : on continue
+                }
+            } catch (\Exception $exception) {
+                return redirect('/login');
             }
         }
 

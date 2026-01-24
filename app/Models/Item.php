@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+    protected $fillable = ['name', 'total_qty', 'state', 'is_stock'];
     public function containings(){
         return $this->belongsToMany(Containing::class, 'containing_item')
             ->withPivot('qty_affect');

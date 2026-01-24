@@ -14,5 +14,6 @@
         <a href="/caserne/{{ $caserne->id }}/engins">Vérification des engins</a>
     </div>
 </div>
+<a href="{{route("logout")}}">Se déconnnecter ?</a>
 </body>
 </html>

@@ -74,4 +74,12 @@ class LoginController extends Controller
         // Code invalide : redirige vers le formulaire avec une erreur
         return redirect('/login')->with('error', 'Code invalide');
     }
+
+    public function logout(Request $request){
+        // Delete les session
+        $request->session()->forget('code');
+        $request->session()->forget('email');
+        $request->session()->forget('is_admin');
+        return redirect('/');
+    }
 }
