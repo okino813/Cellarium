@@ -8,6 +8,7 @@ use App\Http\Controllers\InterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ItemController as AdminItemController;
 use App\Http\Controllers\Admin\SourceController as AdminsourceController;
+use App\Http\Controllers\Admin\ContainingsController as AdminContainingController;
 use App\Http\Middleware\isAdmin;
 
 Route::middleware([isLogin::class])->group(function (){
@@ -34,6 +35,16 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/sources/edit/{id}', [AdminsourceController::class, 'edit'])->name("admin.sources.edit");
     Route::post('/admin/sources/update/{id}', [AdminsourceController::class, 'update'])->name("admin.sources.update");
     Route::get('/admin/sources/delete/{id}', [AdminsourceController::class, 'destroy'])->name("admin.sources.delete");
+
+
+    // Crud Contenant
+    Route::get('/admin/containings', [AdminContainingController::class, 'index'])->name("admin.containings.index");
+    Route::get('/admin/containings/create', [AdminContainingController::class, 'create'])->name("admin.containings.create");
+    Route::post('/admin/containings/store', [AdminContainingController::class, 'store'])->name("admin.containings.store");
+    Route::get('/admin/containings/edit/{id}', [AdminContainingController::class, 'edit'])->name("admin.containings.edit");
+    Route::post('/admin/containings/update/{id}', [AdminContainingController::class, 'update'])->name("admin.containings.update");
+    Route::get('/admin/containings/delete/{id}', [AdminContainingController::class, 'destroy'])->name("admin.containings.delete");
+
 
 
 });
