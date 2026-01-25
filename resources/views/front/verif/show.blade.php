@@ -1,3 +1,9 @@
-<div>
-    <!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
-</div>
+
+@foreach($contenants as $contenant)
+    <h2>{{$contenant->name}}</h2>
+    <ul>
+        @foreach($contenant->items as $item)
+            <li><input type="checkbox"> {{$item->pivot->qty_affect}} {{$item->name}} </li>
+        @endforeach
+    </ul>
+@endforeach

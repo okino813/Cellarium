@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Containing;
 use Illuminate\Http\Request;
 use App\Models\Source;
 
@@ -15,6 +16,7 @@ class VerifController extends Controller
     }
 
     public function show(Request $request, $id){
-        return view('front.verif.show');
+        $contenants = Containing::where('source_id', $id)->with('items')->get();
+        return view('front.verif.show', compact('contenants'));
     }
 }
