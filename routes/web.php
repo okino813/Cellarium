@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ItemController as AdminItemController;
 use App\Http\Controllers\Admin\SourceController as AdminsourceController;
 use App\Http\Controllers\Admin\ContainingsController as AdminContainingController;
+use App\Http\Controllers\Admin\AdminController as AdminAdminController;
 use App\Http\Middleware\isAdmin;
 
 Route::middleware([isLogin::class])->group(function (){
@@ -42,10 +43,17 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/containings/create', [AdminContainingController::class, 'create'])->name("admin.containings.create");
     Route::post('/admin/containings/store', [AdminContainingController::class, 'store'])->name("admin.containings.store");
     Route::get('/admin/containings/edit/{id}', [AdminContainingController::class, 'edit'])->name("admin.containings.edit");
-    Route::post('/admin/containings/update/{id}', [AdminContainingController::class, 'update'])->name("admin.containings.update");
+    Route::post('/admin/containings/update/{id}', [AdminContainingController::class, 'updatePassword'])->name("admin.updatePassword.update");
     Route::get('/admin/containings/delete/{id}', [AdminContainingController::class, 'destroy'])->name("admin.containings.delete");
 
-
+    // Crud Admin
+    Route::get('/admin/admins', [AdminAdminController::class, 'index'])->name("admin.admins.index");
+    Route::get('/admin/admins/create', [AdminAdminController::class, 'create'])->name("admin.admins.create");
+    Route::post('/admin/admins/store', [AdminAdminController::class, 'store'])->name("admin.admins.store");
+    Route::get('/admin/admins/edit/{id}', [AdminAdminController::class, 'edit'])->name("admin.admins.edit");
+    Route::post('/admin/admins/update/{id}', [AdminAdminController::class, 'update'])->name("admin.admins.update");
+    Route::post('/admin/admins/password/update/{id}', [AdminAdminController::class, 'updatePassword'])->name("admin.admins.updatePassword");
+    Route::get('/admin/admins/delete/{id}', [AdminAdminController::class, 'destroy'])->name("admin.admins.delete");
 
 });
 
