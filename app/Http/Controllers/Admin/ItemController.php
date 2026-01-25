@@ -10,7 +10,6 @@ class ItemController extends Controller
 {
     public function index(Request $request){
         $items = Item::all();
-
         return view('admin.items.index', compact('items'));
     }
 

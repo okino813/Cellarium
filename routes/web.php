@@ -1,20 +1,26 @@
 <?php
-use App\Http\Controllers\TestController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use App\Http\Middleware\isLogin;
-use App\Http\Controllers\InterController;
-use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\Admin\AdminController as AdminAdminController;
+use App\Http\Controllers\Admin\ContainingsController as AdminContainingController;
 use App\Http\Controllers\Admin\ItemController as AdminItemController;
 use App\Http\Controllers\Admin\SourceController as AdminsourceController;
-use App\Http\Controllers\Admin\ContainingsController as AdminContainingController;
-use App\Http\Controllers\Admin\AdminController as AdminAdminController;
+use App\Http\Controllers\Admin\MouvementController as AdminMouvementController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Front\InterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TestController;
 use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\isLogin;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware([isLogin::class])->group(function (){
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/return-inter', [InterController::class, 'index'])->name("return-inter");
+
+
+    Route::get('/return-inter', [InterController::class, 'index'])->name("front.return-inter.index");
+    Route::post('/return-inter/validate', [InterController::class, 'validate'])->name("front.return-inter.validate");
+
     Route::get('/logout', [LoginController::class, 'logout'])->name("logout");
 });
 
@@ -55,7 +61,11 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::post('/admin/admins/password/update/{id}', [AdminAdminController::class, 'updatePassword'])->name("admin.admins.updatePassword");
     Route::get('/admin/admins/delete/{id}', [AdminAdminController::class, 'destroy'])->name("admin.admins.delete");
 
+    Route::get('/admin/mouvement/index', [AdminMouvementController::class, 'index'])->name("admin.movement.index");
+
 });
+
+
 
 // Routes publiques (accessibles sans session)
 Route::get('/code/{code}', [LoginController::class, 'index']); // Affiche le formulaire de login avec le code dans l'URL
