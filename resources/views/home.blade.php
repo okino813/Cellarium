@@ -11,7 +11,7 @@
 
     <div class="row">
         <a href="{{route("front.return-inter.index")}}">Retours d'intervention</a>
-        <a href="/caserne/{{ $caserne->id }}/engins">Vérification des engins</a>
+        <a href="{{route("front.verif.index")}}">Vérification des engins</a>
     </div>
 </div>
 <a href="{{route("logout")}}">Se déconnnecter ?</a>
