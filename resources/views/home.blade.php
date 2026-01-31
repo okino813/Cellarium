@@ -1,19 +1,24 @@
-<html>
-<head>
-    <title>Cellarium</title>
-</head>
+@extends('layout.app')
 
-<body>
+@section('content')
+    <div class="container">
 
-{{-- Ici on va avoir deux choix : Retours d'inter ou Vérificaiton de l'engin--}}
-<div class="container">
-    <h1>Phramarcie du Centre de secours de {{ $caserne->city }}</h1>
+        <div class="grid-2">
+            <div class="card text-center">
+                <h2>Retours d'Intervention</h2>
+                <p style="margin-bottom: 25px;">
+                    Renseignez les éléments pris dans la réserve après une intervention.
+                </p>
+                <a href="{{ route('front.return-inter.index') }}" class="btn">Accéder</a>
+            </div>
 
-    <div class="row">
-        <a href="{{route("front.return-inter.index")}}">Retours d'intervention</a>
-        <a href="{{route("front.verif.index")}}">Vérification des engins</a>
+            <div class="card text-center">
+                <h2>Vérification des Engins</h2>
+                <p style="margin-bottom: 25px;">
+                    Vérifiez les engins et leur contenu.
+                </p>
+                <a href="{{ route('front.verif.index') }}" class="btn btn-success">Accéder</a>
+            </div>
+        </div>
     </div>
-</div>
-<a href="{{route("logout")}}">Se déconnnecter ?</a>
-</body>
-</html>
+@endsection

@@ -1,6 +1,3 @@
-import './bootstrap';
-import './test';
+import '../css/app.css';
 
-import { client } from 'laravel-precognition-vue';
-
-client.axios().defaults.headers.common['Authorization'] = authToken;
+console.log('App loaded');
