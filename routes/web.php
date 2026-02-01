@@ -25,6 +25,7 @@ Route::middleware([isLogin::class])->group(function (){
 
     Route::get('/verif', [VerifController::class, 'index'])->name("front.verif.index");
     Route::get('/verif/show/{id}', [VerifController::class, 'show'])->name("front.verif.show");
+    Route::post('/verif/show/validate/{id}', [VerifController::class, 'validate'])->name("front.verif.validate");
 
     Route::post('/logout', [LoginController::class, 'logout'])->name("logout");
 });

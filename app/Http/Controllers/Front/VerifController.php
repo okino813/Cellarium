@@ -17,6 +17,14 @@ class VerifController extends Controller
 
     public function show(Request $request, $id){
         $contenants = Containing::where('source_id', $id)->with('items')->get();
-        return view('front.verif.show', compact('contenants'));
+        $source = Source::find($id);
+        return view('front.verif.show', compact('contenants', 'source'));
+    }
+
+    public function validate(Request $request, $id){
+        $source = Source::find($id);
+        $sourceName = $source->name;
+        $message =  "$sourceName vérifié(e) !";
+        return redirect()->route('front.verif.index')->withSuccess($message);
     }
 }
