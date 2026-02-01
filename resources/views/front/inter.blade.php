@@ -54,7 +54,7 @@
 
             <div style="background-color: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
                 <label for="comment" style="display: block; font-size: 14px; color: #2c3e50; font-weight: 600; margin-bottom: 8px;">
-                    Commentaire :
+                    Commentaire : <span style="font-style: italic; font-size: 10px;">(Facultatif)</span>
                 </label>
                 <textarea
                     id="comment"

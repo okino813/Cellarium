@@ -31,6 +31,7 @@ class ItemController extends Controller
             'name' => $request->name,
             'total_qty' => $request->total_qty,
             'state' => $request->state,
+            'seuil' => $request->seuil,
             'is_stock' => $request->is_stock
         ]);
 
@@ -57,6 +58,7 @@ class ItemController extends Controller
             'name' => $request->name,
             'total_qty' => $request->total_qty,
             'state' => $request->state,
+            'seuil' => $request->seuil,
             'is_stock' => $request->is_stock
         ]);
 

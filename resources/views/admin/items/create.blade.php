@@ -7,6 +7,9 @@
     <label for="total_qty">Quantité en stock</label>
     <input type="number" name="total_qty" id="total_qty">
 
+    <label for="seuil">Seuil de rupture</label>
+    <input type="number" name="seuil" id="seuil">
+
     <label for="state">Etats</label>
     <select name="state" id="state">
         <option value="1">Activer</option>

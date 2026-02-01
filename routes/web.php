@@ -97,6 +97,6 @@ Route::post('/login', [LoginController::class, 'login'])->name("login.validate")
 Route::get('/login', [LoginController::class, 'index']); // Affiche le formulaire de login sans code
 
 // Routes back-office (accessibles sans session)
-Route::get('/admin/code/{code}', [LoginController::class, 'indexAdmin']); // Affiche le formulaire de login avec le code dans l'URL
+Route::get('/admin/code/{code}', [LoginController::class, 'indexAdmin'])->name("admin.login.code"); // Affiche le formulaire de login avec le code dans l'URL
 Route::post('/admin/login', [LoginController::class, 'loginAdmin'])->name("admin.login.validate"); // Traite le formulaire de login
 Route::get('/admin/login', [LoginController::class, 'indexAdmin'])->name('admin.login'); // Affiche le formulaire de login sans code

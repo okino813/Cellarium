@@ -6,6 +6,7 @@
     <tr>
         <td>Nom</td>
         <td>Quantité stocké</td>
+        <td>Seuil de rupture</td>
         <td>Etats</td>
         <td>Est stocké ?</td>
         <td>Action</td>
@@ -16,6 +17,7 @@
         <tr>
             <td>{{$item->name}}</td>
             <td>{{$item->total_qty}}</td>
+            <td>{{$item->seuil}}</td>
             <td>{{$item->state  ? "Oui" : "Non"}}</td>
             <td>{{$item->is_stock ? "Oui" : "Non"}}</td>
             <td><a href="{{route("admin.items.edit", $item->id)}}">Modifer</a><br>

@@ -7,6 +7,10 @@
     <label for="total_qty">Quantité en stock</label>
     <input type="number" name="total_qty" id="total_qty" value="{{$item->total_qty}}">
 
+    <label for="seuil">Seuil de rupture</label>
+    <input type="number" name="seuil" id="seuil" value="{{$item->seuil}}">
+
+
     <label for="state">Etats</label>
     <select name="state" id="state">
         <option value="1" {{ $item->state == 1 ? "selected" : "" }}>Activer</option>

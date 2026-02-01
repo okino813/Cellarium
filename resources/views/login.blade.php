@@ -60,5 +60,48 @@
                 </button>
             </form>
         </div>
+        @if(isset($code))
+            <div style="text-align: center; margin-top: 20px;">
+                <a
+                    href="{{ route('admin.login.code', $code) }}"
+                    class="btn-admin"
+                    style="
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #6c757d; /* Gris foncé pour un style admin */
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+                transition: background-color 0.3s;
+            "
+                    onmouseover="this.style.backgroundColor='#5a6268'"
+                    onmouseout="this.style.backgroundColor='#6c757d'"
+                >
+                    Espace Admin
+                </a>
+            </div>
+        @else
+            <div style="text-align: center; margin-top: 20px;">
+                <a
+                    href="{{ route('admin.login') }}"
+                    class="btn-admin"
+                    style="
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #6c757d;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+                transition: background-color 0.3s;
+            "
+                    onmouseover="this.style.backgroundColor='#5a6268'"
+                    onmouseout="this.style.backgroundColor='#6c757d'"
+                >
+                    Espace Admin
+                </a>
+            </div>
+        @endif
     </div>
 @endsection

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="card" style="max-width: 500px; margin: 50px auto;">
+    <div class="card" style="max-width: 500px; margin: 0px auto; padding:20px;">
         <div style="text-align: center; margin-bottom: 30px;">
             <h1 style="font-size: 32px; color: #2c3e50; margin-bottom: 10px;">
                 🔧 Administration
