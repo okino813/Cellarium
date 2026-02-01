@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="card" style="max-width: 500px; margin: 50px auto;">
+        <div class="card" style="max-width: 500px; margin: 50px auto; padding: 20px;">
             <h1 class="text-center">Connexion</h1>
             <p class="text-center" style="margin-bottom: 30px;">
                 Veuillez entrer votre code caserne pour accéder au suivi de stock.

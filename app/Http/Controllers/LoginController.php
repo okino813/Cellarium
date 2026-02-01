@@ -81,6 +81,18 @@ class LoginController extends Controller
         $request->session()->forget('code');
         $request->session()->forget('email');
         $request->session()->forget('is_admin');
+        $request->session()->forget('idAdmin');
+
         return redirect('/');
+    }
+
+    public function logoutAdmin(Request $request){
+        // Delete les session
+        $request->session()->forget('code');
+        $request->session()->forget('email');
+        $request->session()->forget('is_admin');
+        $request->session()->forget('idAdmin');
+
+        return redirect()->route('admin.index');
     }
 }

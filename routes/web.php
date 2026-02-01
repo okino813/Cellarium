@@ -32,6 +32,8 @@ Route::middleware([isLogin::class])->group(function (){
 
 Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin', [AdminController::class, 'index'])->name("admin.index");
+    Route::post('/admin/logout', [LoginController::class, 'logoutAdmin'])->name("admin.logout");
+
 
     // Crud Item
     Route::get('/admin/items', [AdminItemController::class, 'index'])->name("admin.items.index");

@@ -13,8 +13,6 @@ class FirestationSeeder extends Seeder
      */
     public function run(): void
     {
-
-
         Firestation::factory()->count(1)->create([
             'city' => 'Saint Martin des Noyers',
             'postal_code' => '85140',
