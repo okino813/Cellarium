@@ -44,13 +44,11 @@ class ItemController extends Controller
     }
 
     public function edit(Request $request, $id){
-        $item = Item::find($id)->with('containings')->first();
+        $item = Item::with('containings')->findOrFail($id);
+
         $contenants = Containing::whereDoesntHave('items', function($query) use ($id) {
             $query->where('item_id', $id);
         })->get();
-
-//        dd($item->containings->pivot_qty_affect);
-
 
         return view('admin.items.edit', compact('item', 'contenants'));
     }

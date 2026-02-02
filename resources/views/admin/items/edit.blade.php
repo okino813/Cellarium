@@ -312,11 +312,8 @@
                 </div>
             @else
                 <div style="text-align: center; padding: 40px 0; color: #28a745;">
-                    <p style="font-size: 18px; margin: 0;">
-                        Aucun article en alerte de stock !
-                    </p>
                     <p style="color: #7f8c8d; margin-top: 10px;">
-                        Tous vos stocks sont au-dessus des seuils d'alerte.
+                        Associé à aucun contenant
                     </p>
                 </div>
             @endif
@@ -427,7 +424,7 @@
             }
 
             console.log(`Nouvelle quantité pour le contenant ${containingId} : ${newQty}`);
-            fetch(`{{ route('admin.attribution.addItemContaining.update', $containing->id)  }}`, {
+            fetch(`{{ route('admin.attribution.addItemContaining.update', $contenant->id)  }}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
