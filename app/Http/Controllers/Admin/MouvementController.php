@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class MouvementController extends Controller
 {
     public function index(Request $request){
-        $movements = Movement::all();
+        $movements = Movement::all()->sortByDesc('created_at');
         return view('admin.movement.index', compact('movements'));
     }
 }
