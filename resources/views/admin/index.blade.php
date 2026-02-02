@@ -31,7 +31,7 @@
 
             <!-- Card Alertes -->
             <div class="card" style="text-align: center; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">
-                <h3 style="font-size: 18px; margin-bottom: 10px; color: white;">⚠️ Alertes Stock</h3>
+                <h3 style="font-size: 18px; margin-bottom: 10px; color: white;">Alertes Stock</h3>
                 <p style="font-size: 42px; font-weight: bold; margin: 0;">{{ $lowStockCount ?? 0 }}</p>
             </div>
         </div>
@@ -39,7 +39,7 @@
         <!-- Alertes de stock faible -->
         <div class="card">
             <h2 style="font-size: 24px; color: #2c3e50; margin-bottom: 20px; border-bottom: 3px solid #e74c3c; padding-bottom: 10px;">
-                ⚠️ Articles bientôt en rupture de stock
+                Articles en rupture de stock
             </h2>
 
             @if(isset($lowStockItems) && $lowStockItems->count() > 0)
@@ -49,7 +49,6 @@
                         <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
                             <th style="padding: 12px; text-align: left; font-weight: 600; color: #2c3e50;">Item</th>
                             <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Stock Actuel</th>
-                            <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Seuil Alerte</th>
                             <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Statut</th>
                             <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Action</th>
                         </tr>
@@ -60,12 +59,11 @@
                                 <td style="padding: 12px; font-weight: 500;">{{ $item->name }}</td>
                                 <td style="padding: 12px; text-align: center;">
                                     <span style="font-size: 18px; font-weight: bold; color: {{ $item->qty_stock <= 0 ? '#e74c3c' : '#f39c12' }};">
-                                        {{ $item->qty_stock }}
+                                        {{ $item->total_qty }}
                                     </span>
                                 </td>
-                                <td style="padding: 12px; text-align: center;">{{ $item->qty_alert ?? 10 }}</td>
                                 <td style="padding: 12px; text-align: center;">
-                                    @if($item->qty_stock <= 0)
+                                    @if($item->total_qty <= $item->seuil)
                                         <span style="background-color: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">
                                             RUPTURE
                                         </span>
@@ -88,7 +86,7 @@
             @else
                 <div style="text-align: center; padding: 40px 0; color: #28a745;">
                     <p style="font-size: 18px; margin: 0;">
-                        ✅ Aucun article en alerte de stock !
+                       Aucun article en alerte de stock !
                     </p>
                     <p style="color: #7f8c8d; margin-top: 10px;">
                         Tous vos stocks sont au-dessus des seuils d'alerte.
@@ -104,13 +102,13 @@
             </h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                 <a href="{{ route('admin.items.create') }}" class="btn btn-success" style="padding: 20px; text-align: center; text-decoration: none; display: block;">
-                    ➕ Nouvel Item
+                    Nouvel Item
                 </a>
                 <a href="{{ route('admin.movement.index') }}" class="btn" style="padding: 20px; text-align: center; text-decoration: none; display: block;">
-                    📋 Voir Mouvements
+                    Voir Mouvements
                 </a>
                 <a href="{{ route('admin.sources.index') }}" class="btn" style="padding: 20px; text-align: center; text-decoration: none; display: block;">
-                    🚒 Gérer Sources
+                    Gérer Sources
                 </a>
             </div>
         </div>
