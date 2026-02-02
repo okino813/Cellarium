@@ -40,7 +40,7 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/items/create', [AdminItemController::class, 'create'])->name("admin.items.create");
     Route::post('/admin/items/store', [AdminItemController::class, 'store'])->name("admin.items.store");
     Route::get('/admin/items/edit/{id}', [AdminItemController::class, 'edit'])->name("admin.items.edit");
-    Route::post('/admin/items/update/{id}', [AdminItemController::class, 'update'])->name("admin.items.update");
+    Route::put('/admin/items/update/{id}', [AdminItemController::class, 'update'])->name("admin.items.update");
     Route::get('/admin/items/delete/{id}', [AdminItemController::class, 'destroy'])->name("admin.items.delete");
 
     // Crud Source

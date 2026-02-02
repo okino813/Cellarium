@@ -23,12 +23,6 @@
                 <p style="font-size: 42px; font-weight: bold; margin: 0;">{{ $movementsThisMonth ?? 0 }}</p>
             </div>
 
-            <!-- Card Sources actives -->
-            <div class="card" style="text-align: center; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
-                <h3 style="font-size: 18px; margin-bottom: 10px; color: white;">Sources actives</h3>
-                <p style="font-size: 42px; font-weight: bold; margin: 0;">{{ $activeSources ?? 0 }}</p>
-            </div>
-
             <!-- Card Alertes -->
             <div class="card" style="text-align: center; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">
                 <h3 style="font-size: 18px; margin-bottom: 10px; color: white;">Alertes Stock</h3>

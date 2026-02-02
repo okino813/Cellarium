@@ -18,8 +18,11 @@ class AdminController extends Controller
         $activeSources = Source::count();
 
         // Items en rupture ou proche de la rupture
-        $lowStockItems = Item::whereRaw('total_qty <= seuil')
-            ->orWhere('total_qty', '<=', 0)
+        $lowStockItems = Item::where('is_stock', true)->where('state', '=', true)
+            ->where(function($query) {
+                $query->whereRaw('total_qty <= seuil')
+                    ->orWhere('total_qty', '<=', 0);
+            })
             ->orderBy('total_qty', 'asc')
             ->get();
 

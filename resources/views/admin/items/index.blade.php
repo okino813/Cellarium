@@ -53,14 +53,20 @@
                             <td style="padding: 15px; font-weight: 500; color: #2c3e50;">
                                 {{ $item->name }}
                             </td>
-                            <td style="padding: 15px; text-align: center;">
+                            @if(!$item->is_stock)
+                            <td style="padding: 15px; text-align: center;" colspan="2">
+                                N'est pas stocké
+                            </td>
+                            @else
+                                <td style="padding: 15px; text-align: center;">
                                 <span style="font-size: 18px; font-weight: bold; color: {{ $item->total_qty <= $item->seuil ? '#e74c3c' : '#28a745' }};">
                                     {{ $item->total_qty }}
                                 </span>
-                            </td>
-                            <td style="padding: 15px; text-align: center; color: #7f8c8d;">
-                                {{ $item->seuil }}
-                            </td>
+                                </td>
+                                <td style="padding: 15px; text-align: center; color: #7f8c8d;">
+                                    {{ $item->seuil }}
+                                </td>
+                            @endif
 
                             <td style="padding: 15px; text-align: center;">
                                 <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">

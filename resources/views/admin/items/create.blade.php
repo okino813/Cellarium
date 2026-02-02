@@ -11,7 +11,7 @@
             </p>
         </div>
 
-        <div class="card">
+        <div class="card" style=" padding-left:20px; padding-right:20px;">
             @if($errors->any())
                 <div class="alert-error" style="margin-bottom: 20px;">
                     <strong>Erreurs :</strong>
@@ -43,59 +43,6 @@
                     <small style="color: #7f8c8d; font-size: 13px;">Le nom doit être unique et descriptif</small>
                 </div>
 
-                <!-- Quantité en stock -->
-                <div style="margin-bottom: 20px;">
-                    <label for="total_qty" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                        Quantité initiale en stock <span style="color: #e74c3c;">*</span>
-                    </label>
-                    <input
-                        type="number"
-                        name="total_qty"
-                        id="total_qty"
-                        class="input-field"
-                        placeholder="0"
-                        value="{{ old('total_qty', 0) }}"
-                        min="0"
-                        required
-                    >
-                    <small style="color: #7f8c8d; font-size: 13px;">Quantité actuellement disponible</small>
-                </div>
-
-                <!-- Seuil de rupture -->
-                <div style="margin-bottom: 20px;">
-                    <label for="seuil" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                        Seuil d'alerte <span style="color: #e74c3c;">*</span>
-                    </label>
-                    <input
-                        type="number"
-                        name="seuil"
-                        id="seuil"
-                        class="input-field"
-                        placeholder="10"
-                        value="{{ old('seuil', 10) }}"
-                        min="0"
-                        required
-                    >
-                    <small style="color: #7f8c8d; font-size: 13px;">Vous serez alerté quand le stock atteint ce seuil</small>
-                </div>
-
-                <!-- État -->
-                <div style="margin-bottom: 20px;">
-                    <label for="state" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                        État de l'item
-                    </label>
-                    <select
-                        name="state"
-                        id="state"
-                        class="input-field"
-                        style="cursor: pointer;"
-                    >
-                        <option value="1" {{ old('state', 1) == 1 ? 'selected' : '' }}>✓ Actif</option>
-                        <option value="0" {{ old('state') == 0 ? 'selected' : '' }}>✗ Désactivé</option>
-                    </select>
-                    <small style="color: #7f8c8d; font-size: 13px;">Les items désactivés n'apparaissent pas dans les vérifications</small>
-                </div>
-
                 <!-- Est stocké -->
                 <div style="margin-bottom: 30px;">
                     <label for="is_stock" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
@@ -111,6 +58,62 @@
                         <option value="0" {{ old('is_stock') == 0 ? 'selected' : '' }}>Non</option>
                     </select>
                     <small style="color: #7f8c8d; font-size: 13px;">Décochez si l'item n'a pas besoin de gestion de stock</small>
+                </div>
+
+                <div class="stock_fields" id="stock_fields">
+                    <!-- Quantité en stock -->
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="total_qty" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                            Quantité initiale en stock <span style="color: #e74c3c;">*</span>
+                        </label>
+                        <input
+                            type="number"
+                            name="total_qty"
+                            id="total_qty"
+                            class="input-field"
+                            placeholder="0"
+                            value="{{ old('total_qty', 0) }}"
+                            min="0"
+                            required
+                        >
+                        <small style="color: #7f8c8d; font-size: 13px;">Quantité actuellement disponible</small>
+                    </div>
+
+                    <!-- Seuil de rupture -->
+                    <div style="margin-bottom: 20px;">
+                        <label for="seuil" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                            Seuil d'alerte <span style="color: #e74c3c;">*</span>
+                        </label>
+                        <input
+                            type="number"
+                            name="seuil"
+                            id="seuil"
+                            class="input-field"
+                            placeholder="10"
+                            value="{{ old('seuil', 10) }}"
+                            min="0"
+                            required
+                        >
+                        <small style="color: #7f8c8d; font-size: 13px;">Vous serez alerté quand le stock atteint ce seuil</small>
+                    </div>
+                </div>
+
+                <!-- État -->
+                <div style="margin-bottom: 20px;">
+                    <label for="state" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                        État de l'item
+                    </label>
+                    <select
+                        name="state"
+                        id="state"
+                        class="input-field"
+                        style="cursor: pointer;"
+                    >
+                        <option value="0" {{ old('state') == 0 ? 'selected' : '' }}> Désactivé</option>
+                        <option value="1" {{ old('state', 1) == 1 ? 'selected' : '' }}> Actif</option>
+                    </select>
+                    <small style="color: #7f8c8d; font-size: 13px;">Les items désactivés n'apparaissent pas dans les vérifications</small>
                 </div>
 
                 <!-- Boutons -->
@@ -156,4 +159,31 @@
             }
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isStockSelect = document.getElementById('is_stock');
+            const stockFields = document.getElementById('stock_fields');
+            const seuil = document.getElementById('seuil');
+            const totalQtyInput = document.getElementById('total_qty');
+            const seuilInput = document.getElementById('seuil');
+
+            // Fonction pour masquer/afficher les champs
+            function toggleStockFields() {
+                if (isStockSelect.value === '0') {
+                    stockFields.style.display = 'none';
+                    totalQtyInput.value = 0;
+                    seuil.value = 0;
+                } else {
+                    stockFields.style.display = 'block';
+                }
+            }
+
+            // Appelle la fonction au chargement de la page
+            toggleStockFields();
+
+            // Ajoute un écouteur d'événement pour le changement de sélection
+            isStockSelect.addEventListener('change', toggleStockFields);
+        });
+    </script>
 @endsection

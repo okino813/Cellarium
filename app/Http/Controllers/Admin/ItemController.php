@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Containing;
 use App\Models\Item;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ItemController extends Controller
 {
     public function index(Request $request){
-        $items = Item::all();
+        $items = Item::all()->sortBy(function ($item) {
+            // D'abord par is_stock (true en premier)
+            return [$item->is_stock ? 0 : 1, $item->total_qty];
+        });
+
         return view('admin.items.index', compact('items'));
     }
 
@@ -39,9 +44,15 @@ class ItemController extends Controller
     }
 
     public function edit(Request $request, $id){
-        $item = Item::find($id);
+        $item = Item::find($id)->with('containings')->first();
+        $contenants = Containing::whereDoesntHave('items', function($query) use ($id) {
+            $query->where('item_id', $id);
+        })->get();
 
-        return view('admin.items.edit', compact('item'));
+//        dd($item->containings->pivot_qty_affect);
+
+
+        return view('admin.items.edit', compact('item', 'contenants'));
     }
 
     public function update(Request $request, $id){
@@ -66,7 +77,10 @@ class ItemController extends Controller
     }
 
     public function destroy($id){
-        $item = Item::destroy($id);
+        $item = Item::find($id);
+        $item->containings()->detach();
+        DB::table('item_movement')->where('item_id', $item->id)->delete();
+        $item->delete();
         return redirect()->route('admin.items.index');
     }
 }

@@ -43,7 +43,7 @@ class AttributionController extends Controller
         // Attache l'item au Containing avec la quantité
         $containing->items()->attach($item->id, ['qty_affect' => $request->qty]);
 
-        return redirect()->route('admin.attribution.index')->with('success', 'Item ajouté avec succès !');
+        return redirect()->back();
     }
 
     public function editItemContaining($containing_id, $item_id)
@@ -68,7 +68,10 @@ class AttributionController extends Controller
 
         $containing->items()->updateExistingPivot($item->id, ['qty_affect' => $request->qty]);
 
-        return redirect()->route('admin.attribution.index')->with('success', 'Quantité mise à jour avec succès !');
+        return response()->json([
+            'success' => true,
+            'message' => 'Quantité mise à jour avec succès !'
+        ]);
     }
 
     public function ItemContainingDelete(Request $request, $containing_id, $item_id)
@@ -76,7 +79,7 @@ class AttributionController extends Controller
         $containing = Containing::findOrFail($containing_id);
         $containing->items()->detach($item_id);
 
-        return redirect()->route('admin.attribution.index')->with('success', 'Item supprimé avec succès !');
+        return redirect()->back();
     }
 
     // CRUD pour Containing-Source
