@@ -14,15 +14,7 @@ class ContainingsController extends Controller
         $id = $request->session()->get("idAdmin");
         $admin = Admin::where('id', $id)->first();
 
-        $sources = Source::where('firestation_id', $admin->firestation_id)->with("containings")->get();
-        $containings = array();
-
-        foreach($sources as $source){
-            foreach($source->containings as $containing){
-                $containings[] = $containing;
-            }
-        }
-
+        $containings = Containing::with("source")->get();
 
         return view('admin.containings.index', compact('containings'));
     }
