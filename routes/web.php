@@ -57,7 +57,7 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/containings/create', [AdminContainingController::class, 'create'])->name("admin.containings.create");
     Route::post('/admin/containings/store', [AdminContainingController::class, 'store'])->name("admin.containings.store");
     Route::get('/admin/containings/edit/{id}', [AdminContainingController::class, 'edit'])->name("admin.containings.edit");
-    Route::post('/admin/containings/update/{id}', [AdminContainingController::class, 'updatePassword'])->name("admin.updatePassword.update");
+    Route::put('/admin/containings/update/{id}', [AdminContainingController::class, 'update'])->name("admin.containings.update");
     Route::get('/admin/containings/delete/{id}', [AdminContainingController::class, 'destroy'])->name("admin.containings.delete");
 
     // Crud Admin

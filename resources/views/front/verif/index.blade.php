@@ -2,7 +2,7 @@
 
 @section('content')
     @if(session('success'))
-    <div style="
+        <div style="
             background-color: #d4edda;
             color: #155724;
             padding: 12px;
@@ -11,9 +11,9 @@
             text-align: center;
             animation: fadeIn 0.5s ease-in-out;
         ">
-        {{ session('success') }}
-    </div>
-@endif
+            {{ session('success') }}
+        </div>
+    @endif
     <div style="padding: 15px;">
         <h1 style="font-size: 24px; color: #2c3e50; margin-bottom: 20px; text-align: center;">
             Vérification du VSAV

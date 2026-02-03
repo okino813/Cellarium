@@ -7,7 +7,7 @@ use App\Models\Admin;
 use App\Models\Containing;
 use App\Models\Source;
 use Illuminate\Http\Request;
-
+use App\Models\Item;
 class ContainingsController extends Controller
 {
     public function index(Request $request){
@@ -63,27 +63,33 @@ class ContainingsController extends Controller
     }
 
     public function edit(Request $request, $id){
-        $containing = Containing::find($id);
+        $contenant = Containing::with('items')->findOrFail($id);
+        $id = $request->session()->get("idAdmin");
+        $admin = Admin::where('id', $id)->first();
 
-        return view('admin.containings.edit', compact('containing'));
+        $sources = Source::where('firestation_id', $admin->firestation_id)->get();
+
+        return view('admin.containings.edit', compact('contenant', 'sources'));
     }
 
     public function update(Request $request, $id){
         $request->validate([
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'source_id' => 'required|integer',
         ]);
 
         $containing = Containing::find($id);
 
         $containing->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'source_id' => $request->source_id
         ]);
 
-        return redirect()->route('admin.sources.index');
+        return redirect()->back()->withSuccess("Contenants modifié !");
     }
 
     public function destroy($id){
         $containing = Containing::destroy($id);
-        return redirect()->route('admin.sources.index');
+        return redirect()->route('admin.containings.index');
     }
 }
