@@ -4,7 +4,7 @@
             <!-- Logo Admin -->
             <div style="display: flex; align-items: center;">
                 <a href="{{ route('admin.index') }}" style="font-size: 20px; font-weight: bold; color: white; text-decoration: none;">
-                    🔧 Admin
+                    Admin
                 </a>
             </div>
 
@@ -16,23 +16,22 @@
             <!-- Navigation principale (desktop) -->
             <div id="desktop-menu" style="display: flex; align-items: center; gap: 20px;">
                 <a href="{{ route('admin.index') }}" style="color: #ecf0f1; text-decoration: none; font-size: 16px; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#ecf0f1'">
-                    📊 Dashboard
+                    Dashboard
                 </a>
 
                 <div class="dropdown" style="position: relative; display: inline-block;">
                     <button onclick="toggleDropdown('stock-menu')" style="color: #ecf0f1; background: none; border: none; font-size: 16px; font-weight: 500; cursor: pointer; padding: 8px 12px;">
-                        📦 Stock ▼
+                        Stock ▼
                     </button>
                     <div id="stock-menu" style="display: none; position: absolute; background-color: white; min-width: 200px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 4px; margin-top: 5px; z-index: 1000;">
                         <a href="{{ route('admin.items.index') }}" style="display: block; padding: 12px 16px; color: #2c3e50; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#ecf0f1'" onmouseout="this.style.backgroundColor='white'">Items</a>
                         <a href="{{ route('admin.movement.index') }}" style="display: block; padding: 12px 16px; color: #2c3e50; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#ecf0f1'" onmouseout="this.style.backgroundColor='white'">Mouvements</a>
-                        <a href="{{ route('admin.attribution.index') }}" style="display: block; padding: 12px 16px; color: #2c3e50; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#ecf0f1'" onmouseout="this.style.backgroundColor='white'">Attributions</a>
                     </div>
                 </div>
 
                 <div class="dropdown" style="position: relative; display: inline-block;">
                     <button onclick="toggleDropdown('config-menu')" style="color: #ecf0f1; background: none; border: none; font-size: 16px; font-weight: 500; cursor: pointer; padding: 8px 12px;">
-                        ⚙️ Config ▼
+                        Config ▼
                     </button>
                     <div id="config-menu" style="display: none; position: absolute; background-color: white; min-width: 200px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 4px; margin-top: 5px; z-index: 1000;">
                         <a href="{{ route('admin.sources.index') }}" style="display: block; padding: 12px 16px; color: #2c3e50; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#ecf0f1'" onmouseout="this.style.backgroundColor='white'">Sources</a>
@@ -60,7 +59,6 @@
                 <div style="padding-left: 20px; margin-top: 8px;">
                     <a href="{{ route('admin.items.index') }}" style="display: block; padding: 8px 0; color: #bdc3c7; text-decoration: none;">Items</a>
                     <a href="{{ route('admin.movement.index') }}" style="display: block; padding: 8px 0; color: #bdc3c7; text-decoration: none;">Mouvements</a>
-                    <a href="{{ route('admin.attribution.index') }}" style="display: block; padding: 8px 0; color: #bdc3c7; text-decoration: none;">Attributions</a>
                 </div>
             </div>
             <div style="padding: 12px 0; border-bottom: 1px solid #34495e;">

@@ -24,7 +24,7 @@
                 @csrf
 
                 <!-- Nom -->
-                <div style="margin-bottom: 20px;">
+                <div style="margin-bottom: 20px; padding-left:20px; padding-right:20px;">
                     <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
                         Nom du contenant <span style="color: #e74c3c;">*</span>
                     </label>
@@ -40,7 +40,7 @@
                 </div>
 
                 <!-- Source associée -->
-                <div style="margin-bottom: 20px;">
+                <div style="margin-bottom: 20px; padding-left:20px; padding-right:20px;">
                     <label for="source_id" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
                         Source associée <span style="color: #e74c3c;">*</span>
                     </label>
@@ -51,7 +51,6 @@
                         style="cursor: pointer;"
                         required
                     >
-                        <option value="" disabled selected>Choisissez une source...</option>
                         @foreach($sources as $source)
                             <option value="{{ $source->id }}" {{ old('source_id') == $source->id ? 'selected' : '' }}>
                                 {{ $source->name }}
@@ -75,7 +74,7 @@
                 @endif
 
                 <!-- Boutons -->
-                <div style="display: flex; gap: 15px; border-top: 2px solid #dee2e6; padding-top: 20px; margin-top: 30px;">
+                <div style="display: flex; gap: 15px; border-top: 2px solid #dee2e6; padding-top: 20px; margin-top: 30px; padding-left:20px; padding-right:20px;">
                     <button
                         type="submit"
                         class="btn btn-success"

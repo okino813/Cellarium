@@ -65,7 +65,7 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/admins/create', [AdminAdminController::class, 'create'])->name("admin.admins.create");
     Route::post('/admin/admins/store', [AdminAdminController::class, 'store'])->name("admin.admins.store");
     Route::get('/admin/admins/edit/{id}', [AdminAdminController::class, 'edit'])->name("admin.admins.edit");
-    Route::post('/admin/admins/update/{id}', [AdminAdminController::class, 'update'])->name("admin.admins.update");
+    Route::put('/admin/admins/update/{id}', [AdminAdminController::class, 'update'])->name("admin.admins.update");
     Route::post('/admin/admins/password/update/{id}', [AdminAdminController::class, 'updatePassword'])->name("admin.admins.updatePassword");
     Route::get('/admin/admins/delete/{id}', [AdminAdminController::class, 'destroy'])->name("admin.admins.delete");
 

@@ -1,6 +1,19 @@
 @extends('layout.app')
 
 @section('content')
+    @if(session('success'))
+        <div style="
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        ">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container">
 
         <div class="grid-2">

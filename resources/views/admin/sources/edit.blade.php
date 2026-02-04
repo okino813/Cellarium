@@ -52,7 +52,7 @@
                 </div>
 
                 <!-- Boutons -->
-                <div style="display: flex; gap: 15px; border-top: 2px solid #dee2e6; padding-top: 20px; margin-top: 30px;">
+                <div style="display: flex; gap: 15px; border-top: 2px solid #dee2e6; padding-top: 20px; margin-top: 30px; padding-left:20px; padding-right:20px;">
                     <button
                         type="submit"
                         class="btn btn-success"

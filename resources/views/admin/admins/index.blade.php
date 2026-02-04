@@ -1,26 +1,100 @@
-<h1>Voici la liste des Admins</h1>
+@extends('layout.admin')
 
-<a href="{{route("admin.admins.create")}}">Ajouter</a>
-<table>
-    <thead>
-    <tr>
-        <td>Prénom</td>
-        <td>Nom</td>
-        <td>email</td>
-        <td>Action</td>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($admins as $admin)
-        <tr>
-            <td>{{$admin->firstname}}</td>
-            <td>{{$admin->lastname}}</td>
-            <td>{{$admin->email}}</td>
-            <td><a href="{{route("admin.admins.edit", $admin->id)}}">Modifer</a><br>
-            <a href="{{route("admin.admins.delete", $admin->id)}}">Suprimé</a></td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+@section('content')
+    <div class="container" style="max-width: 1400px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+            <div>
+                <h1 style="font-size: 32px; color: #2c3e50; margin-bottom: 5px;">
+                    Liste des Administrateurs
+                </h1>
+                <p style="color: #7f8c8d; margin: 0;">
+                    Gérez les comptes administrateurs
+                </p>
+            </div>
+            <a href="{{ route('admin.admins.create') }}" class="btn btn-success" style="padding: 12px 24px; font-size: 16px; text-decoration: none;">
+                + Ajouter un administrateur
+            </a>
+        </div>
 
+        <!-- Statistiques rapides -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+            <div class="card" style="text-align: center; padding: 15px;">
+                <p style="color: #7f8c8d; margin: 0; font-size: 14px;">Total Administrateurs</p>
+                <p style="font-size: 32px; font-weight: bold; color: #2c3e50; margin: 5px 0 0 0;">{{ $admins->count() }}</p>
+            </div>
+        </div>
 
+        <div class="card">
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 15px; text-align: left; font-weight: 600; color: #2c3e50;">Prénom</th>
+                        <th style="padding: 15px; text-align: left; font-weight: 600; color: #2c3e50;">Nom</th>
+                        <th style="padding: 15px; text-align: left; font-weight: 600; color: #2c3e50;">Email</th>
+                        <th style="padding: 15px; text-align: center; font-weight: 600; color: #2c3e50;">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($admins as $admin)
+                        <tr style="border-bottom: 1px solid #dee2e6; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.backgroundColor='white'">
+                            <td style="padding: 15px; font-weight: 500; color: #2c3e50;">
+                                {{ $admin->firstname }}
+                            </td>
+                            <td style="padding: 15px; font-weight: 500; color: #2c3e50;">
+                                {{ $admin->lastname }}
+                            </td>
+                            <td style="padding: 15px; color: #495057;">
+                                {{ $admin->email }}
+                            </td>
+                            <td style="padding: 15px; text-align: center;">
+                                <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                                    <a href="{{ route('admin.admins.edit', $admin->id) }}"
+                                       style="padding: 6px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; transition: background 0.2s;"
+                                       onmouseover="this.style.backgroundColor='#0056b3'"
+                                       onmouseout="this.style.backgroundColor='#007bff'">
+                                        Modifier
+                                    </a>
+                                    <a href="{{ route('admin.admins.delete', $admin->id) }}"
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet administrateur ?')"
+                                       style="padding: 6px 12px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; transition: background 0.2s;"
+                                       onmouseover="this.style.backgroundColor='#c82333'"
+                                       onmouseout="this.style.backgroundColor='#dc3545'">
+                                        Supprimer
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" style="padding: 40px; text-align: center; color: #7f8c8d;">
+                                <p style="font-size: 18px; margin: 0;">Aucun administrateur trouvé</p>
+                                <p style="margin: 10px 0 0 0;">
+                                    <a href="{{ route('admin.admins.create') }}" style="color: #007bff; text-decoration: underline;">
+                                        Ajouter le premier administrateur
+                                    </a>
+                                </p>
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 10px 8px !important;
+            }
+            .btn {
+                font-size: 14px !important;
+                padding: 8px 12px !important;
+            }
+        }
+    </style>
+@endsection

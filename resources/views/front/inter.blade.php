@@ -16,12 +16,29 @@
             </p>
         </div>
 
+        <!-- Barre de recherche -->
+        <div style="margin-bottom: 20px; background-color: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <label for="search" style="display: block; font-size: 14px; color: #2c3e50; font-weight: 600; margin-bottom: 8px;">
+                Rechercher un item
+            </label>
+            <input
+                type="text"
+                id="search"
+                placeholder="Tapez pour filtrer les items..."
+                style="width: 100%; padding: 12px; border: 2px solid #ccc; border-radius: 6px; font-size: 16px; box-sizing: border-box;"
+                onkeyup="filterItems()"
+            >
+            <small style="display: block; margin-top: 5px; color: #7f8c8d; font-size: 12px;">
+                <span id="result-count">{{ count($items) }}</span> item(s) affiché(s)
+            </small>
+        </div>
+
         <form action="{{ route('front.return-inter.validate') }}" method="POST">
             @csrf
 
-            <div class="item-grid">
+            <div class="item-grid" id="items-container">
                 @foreach($items as $item)
-                    <div class="item-card">
+                    <div class="item-card" data-item-name="{{ strtolower($item->name) }}">
                         <label class="item-label">{{ $item->name }}</label>
 
                         <div class="end">
@@ -47,9 +64,16 @@
                                 </button>
                             </div>
                         </div>
-
                     </div>
                 @endforeach
+            </div>
+
+            <!-- Message si aucun résultat -->
+            <div id="no-results" style="display: none; text-align: center; padding: 40px 0; color: #7f8c8d;">
+                <p style="font-size: 18px; margin: 0;">Aucun item trouvé</p>
+                <p style="margin: 10px 0 0 0; font-size: 14px;">
+                    Essayez avec un autre terme de recherche
+                </p>
             </div>
 
             <div style="background-color: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
@@ -89,6 +113,41 @@
             } else {
                 display.textContent = '0';
                 display.className = 'quantity-display quantity-zero';
+            }
+        }
+
+        function filterItems() {
+            const searchInput = document.getElementById('search');
+            const filter = searchInput.value.toLowerCase();
+            const itemsContainer = document.getElementById('items-container');
+            const items = itemsContainer.getElementsByClassName('item-card');
+            const noResults = document.getElementById('no-results');
+            const resultCount = document.getElementById('result-count');
+
+            let visibleCount = 0;
+
+            // Parcourir tous les items
+            for (let i = 0; i < items.length; i++) {
+                const itemName = items[i].getAttribute('data-item-name');
+
+                if (itemName.includes(filter)) {
+                    items[i].style.display = '';
+                    visibleCount++;
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+
+            // Mettre à jour le compteur
+            resultCount.textContent = visibleCount;
+
+            // Afficher/masquer le message "aucun résultat"
+            if (visibleCount === 0) {
+                itemsContainer.style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                itemsContainer.style.display = 'grid';
+                noResults.style.display = 'none';
             }
         }
     </script>

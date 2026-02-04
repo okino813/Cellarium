@@ -61,6 +61,10 @@
                                             <span style="color: #495057;">{{ $item->name }}</span>
                                         </div>
                                     @endforeach
+                                    @if(isset($movement->comment))
+                                        <p><b>Commentaire :</b></p>
+                                        <p style="font-style: italic">"{{$movement->comment}}"</p>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

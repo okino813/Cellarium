@@ -18,7 +18,7 @@ class InterController extends Controller
         $this->mailgunService = $mailgunService;
     }
     public function index(Request $request){
-        $items = Item::all();
+        $items = Item::all()->sortBy("name");
 
         return view('front.inter', compact('items'  ));
     }
@@ -81,8 +81,6 @@ class InterController extends Controller
             $movement->items()->attach($movementsData);
         }
 
-
-
-        return redirect()->route("front.return-inter.index");
+        return redirect()->route("front.return-inter.index")->withSuccess("Changement du stock pris en compte !");
     }
 }
