@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Containing;
 use App\Models\Item;
+use App\Models\Movement;
 use Illuminate\Http\Request;
 use App\Models\Source;
 
@@ -27,13 +28,29 @@ class VerifController extends Controller
             'qty' => 'required|integer',
         ]);
 
+        $firstname = $request->session()->get('firstname');
+
+        $movementsData = [];
+
         $item = Item::find($id);
+
+        $movementsData[$item->id] = ['operation' => $validated['qty']];
+
 
         $total_qty = $item->total_qty + $validated['qty'];
 
 
-        // Logique pour mettre à jour la quantité (ex: dans une table pivot)
+        // Logique pour mettre à jour la quantité
         $item->update(['total_qty' => $total_qty]);
+
+        if(!empty($movementsData)){
+            $movement = Movement::create([
+                'firstname' => $firstname,
+                'comment' => "",
+            ]);
+
+            $movement->items()->attach($movementsData);
+        }
 
         return response()->json([
             'message' => 'Quantité mise à jour avec succès !',
