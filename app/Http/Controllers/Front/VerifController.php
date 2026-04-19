@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Containing;
 use App\Models\Item;
 use App\Models\Movement;
-use Illuminate\Http\Request;
 use App\Models\Source;
+use Illuminate\Http\Request;
 
 class VerifController extends Controller
 {

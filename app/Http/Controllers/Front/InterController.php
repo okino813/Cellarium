@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Item;
 use App\Models\Movement;
-use Illuminate\Http\Request;
 use App\Services\MailGunService;
+use Illuminate\Http\Request;
 
 class InterController extends Controller
 {

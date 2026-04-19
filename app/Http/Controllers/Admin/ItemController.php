@@ -7,6 +7,7 @@ use App\Models\Containing;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class ItemController extends Controller
 {
     public function index(Request $request){

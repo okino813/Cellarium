@@ -43,7 +43,6 @@
                         <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
                             <th style="padding: 12px; text-align: left; font-weight: 600; color: #2c3e50;">Item</th>
                             <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Stock Actuel</th>
-                            <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Statut</th>
                             <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Action</th>
                         </tr>
                         </thead>
@@ -55,17 +54,6 @@
                                     <span style="font-size: 18px; font-weight: bold; color: {{ $item->qty_stock <= 0 ? '#e74c3c' : '#f39c12' }};">
                                         {{ $item->total_qty }}
                                     </span>
-                                </td>
-                                <td style="padding: 12px; text-align: center;">
-                                    @if($item->total_qty <= $item->seuil)
-                                        <span style="background-color: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">
-                                            RUPTURE
-                                        </span>
-                                    @else
-                                        <span style="background-color: #f39c12; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">
-                                            ALERTE
-                                        </span>
-                                    @endif
                                 </td>
                                 <td style="padding: 12px; text-align: center;">
                                     <a href="{{ route('admin.items.edit', $item->id) }}" class="btn" style="padding: 8px 16px; font-size: 14px;">

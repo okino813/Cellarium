@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Firestation;
 use Illuminate\Http\Request;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
+
 class LoginController extends Controller
 {
     public function index($code = null)
@@ -50,8 +51,6 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        // A MODIFIER POUR INCLURE LE PASSWORD
-
         // Vérifie si le code est valide
         $firestation = Firestation::where('code', $request->code)->first();
         if ($firestation && $request->code === $firestation->code) {
@@ -68,12 +67,13 @@ class LoginController extends Controller
                 return redirect()->route('admin.index');
             }
 
-            // Redirige vers la page d'accueil
-            return redirect('/');
+
+            // Mot de passe invalide : redirige vers le formulaire avec une erreur
+            return redirect('/admin/login')->with('error', "Mot de passe invalide");
         }
 
         // Code invalide : redirige vers le formulaire avec une erreur
-        return redirect('/login')->with('error', 'Code invalide');
+        return redirect('/admin/login')->with('error', 'Code invalide');
     }
 
     public function logout(Request $request){
