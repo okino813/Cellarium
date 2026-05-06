@@ -59,4 +59,8 @@ class User extends Authenticatable implements JWTSubject
     public final function getJWTCustomClaims(): array{
         return [];
     }
+
+    public function firestation(){
+        return $this->belongsTo(Firestation::class);
+    }
 }

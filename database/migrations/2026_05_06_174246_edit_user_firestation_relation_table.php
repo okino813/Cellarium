@@ -12,13 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->dropColumn('name');
-            $table->string('matricule');
-            $table->boolean('accept_rgpd')->default(false);
-            $table->boolean('isAdmin')->default(false);
-            $table->boolean('isAdminChief')->default(false);
+            $table->foreign('firestation_id')->references('id')->on('firestations');
+            $table->string('matricule')->change();
+            $table->string('email')->change();
         });
     }
 
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        //
     }
 };

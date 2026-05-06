@@ -41,16 +41,16 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <label for="firstname" style="display: block; margin-bottom: 5px; font-weight: bold;">
-                        Prénom :
+                    <label for="matricule" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                        Matricule :
                     </label>
                     <input
                         type="text"
-                        id="firstname"
-                        name="firstname"
+                        id="matricule"
+                        name="matricule"
                         class="input-field"
-                        placeholder="Ex : Francis"
-                        value="{{ old('firstname') }}"
+                        placeholder="Ex : 759644"
+                        value="{{ old('matricule') }}"
                         required
                     >
                 </div>

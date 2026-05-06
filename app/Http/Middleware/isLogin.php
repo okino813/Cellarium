@@ -3,9 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Models\Firestation;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class isLogin
 {
@@ -21,20 +23,26 @@ class isLogin
             return $next($request);
         }
 
-
         // Vérifie si la session contient les bonnes informations
         if ($request->hasSession()) {
-            // On récupère le firestation du code de session
-            $firestation = Firestation::where('code', $request->session()->get('code'))->first();
-
+           //  On récupère le code du firestation de session
             try {
+            $matricule = $request->session()->get('matricule');
+            $code = $request->session()->get('code');
 
 
-                if ($request->session()->get('code') == $firestation->code && $request->session()->get('firstname') !== null) {
+            $user = User::where('matricule', $request->session()->get('matricule'))
+                ->whereHas('firestation', function($query) use ($request) {
+                    $query->where('code', $request->session()->get('code'));
+                })
+                ->first();
+
+                if($user){
                     // On ajoute le code dans le return
-                    $request->attributes->add(['code' => $firestation->code]);
-                    $request->attributes->add(['firstname' => $request->session()->get('firstname')]);
-                    return $next($request); // Session valide : on continue
+                    $request->attributes->add(['code' => $code]);
+                    $request->attributes->add(['matricule' => $matricule]);
+
+                    return $next($request);
                 }
             } catch (\Exception $exception) {
                 return redirect('/login');

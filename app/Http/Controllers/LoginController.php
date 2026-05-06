@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Firestation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,15 +26,19 @@ class LoginController extends Controller
     {
         $request->validate([
             'code' => 'required',
-            'firstname' => 'required'
+            'matricule' => 'required'
         ]);
 
         // Vérifie si le code est valide
         $firestation = Firestation::where('code', $request->code)->first();
         if ($firestation && $request->code === $firestation->code) {
-            // Stocke le code et le prénom en session
-            $request->session()->put('code', $request->code);
-            $request->session()->put('firstname', $request->firstname);
+            // Vérifie si le matricule existe en db
+            $user = User::where('matricule', $request->matricule)->first();
+            if($user){
+                // Stocke le code et le prénom en session
+                $request->session()->put('matricule', $user->matricule);
+                $request->session()->put('code', $firestation->code);
+            }
 
             // Redirige vers la page d'accueil
             return redirect('/');
