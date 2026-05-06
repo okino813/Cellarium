@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\SourceController;
+use App\Http\Controllers\Api\Admin\SourceController;
 use App\Http\Controllers\Api\Admin\ContainController;
 use App\Http\Controllers\Api\Admin\ItemController;
 use App\Http\Controllers\Api\AuthAdminController;
@@ -31,6 +31,12 @@ Route::middleware('auth:api_admin')->group(function () {
     Route::post('/admin/contain/qty/update', [ContainController::class, 'updateQty']);
     Route::get('/admin/movements', [HomeController::class, 'getAllMovements']);
     Route::get('/admin/sources', [HomeController::class, 'getAllSources']);
+
+    // Source
+    Route::get('/admin/sources', [HomeController::class, 'getAllSources']);
+    Route::post('/admin/source/update', [SourceController::class, 'update']);
+    Route::post('/admin/source/store', [SourceController::class, 'store']);
+    Route::post('/admin/source/destroy', [SourceController::class, 'destroy']);
 });
 
 Route::middleware('auth:api_user')->group(function () {
