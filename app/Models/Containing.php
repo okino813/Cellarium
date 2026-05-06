@@ -16,4 +16,8 @@ class Containing extends Model
         return $this->belongsTo(Source::class);
     }
 
+    public function firestation(){
+        return $this->belongsTo(Firestation::class);
+    }
+
 }

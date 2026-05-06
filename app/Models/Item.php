@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    protected $fillable = ['id', 'name', 'total_qty', 'state', 'is_stock', 'seuil'];
+    protected $fillable = ['id', 'name', 'total_qty', 'state', 'is_stock', 'seuil', 'sortorder'];
     public function containings(){
         return $this->belongsToMany(Containing::class, 'containing_item')
             ->withPivot('qty_affect');
@@ -15,5 +15,8 @@ class Item extends Model
     public function movements(){
         return $this->belongsToMany(Movement::class, 'item_movement')
             ->withPivot('operation');
+    }
+    public function firestation(){
+        return $this->belongsTo(Firestation::class);
     }
 }

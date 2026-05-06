@@ -20,4 +20,21 @@ class Firestation extends Model
     public function sources(): HasMany{
         return $this->hasMany(Source::class);
     }
+
+    public function containings(): HasMany{
+        return $this->hasMany(Containing::class);
+    }
+
+
+    public function items(): HasMany{
+        return $this->hasMany(Item::class);
+    }
+
+    public function adminsdis(): HasMany{
+        return $this->hasMany(AdminSdis::class);
+    }
+
+    public function sdis(): HasMany{
+        return $this->hasMany(Sdis::class);
+    }
 }
