@@ -6,11 +6,15 @@
     <title>Cellarium - Pharmacie</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-@include('components.menu')
+
+<body class="content-mobile">
+@include('components.bandeauTop')
 
 <main>
     @yield('content')
 </main>
 </body>
+<footer>
+    @include('components.footer-user')
+</footer>
 </html>

@@ -17,8 +17,7 @@ use App\Http\Middleware\isLogin;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([isLogin::class])->group(function (){
-    Route::get('/', [HomeController::class, 'index']);
-
+    Route::get('/', [InterController::class, 'index'])->name('home');
 
     Route::get('/return-inter', [InterController::class, 'index'])->name("front.return-inter.index");
     Route::post('/return-inter/validate', [InterController::class, 'validate'])->name("front.return-inter.validate");
@@ -29,6 +28,7 @@ Route::middleware([isLogin::class])->group(function (){
     Route::post('/verif/show/validate/{id}', [VerifController::class, 'validate'])->name("front.verif.validate");
 
     Route::post('/logout', [LoginController::class, 'logout'])->name("logout");
+    Route::get('/logout', [LoginController::class, 'logout'])->name("logout");
 });
 
 Route::middleware([isAdmin::class])->group(function (){
@@ -89,8 +89,6 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/mouvement/index', [AdminMouvementController::class, 'index'])->name("admin.movement.index");
 
 });
-
-
 
 // Routes publiques (accessibles sans session)
 Route::get('/code/{code}', [LoginController::class, 'index']); // Affiche le formulaire de login avec le code dans l'URL

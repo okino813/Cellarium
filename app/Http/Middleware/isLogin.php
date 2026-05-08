@@ -42,6 +42,10 @@ class isLogin
                     $request->attributes->add(['code' => $code]);
                     $request->attributes->add(['matricule' => $matricule]);
 
+                    $request->session()->put('firstname', $user->firstname);
+                    $request->session()->put('lastname', $user->lastname);
+                    $request->session()->put('mode', "user");
+
                     return $next($request);
                 }
             } catch (\Exception $exception) {
