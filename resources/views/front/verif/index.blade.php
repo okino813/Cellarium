@@ -14,23 +14,20 @@
             {{ session('success') }}
         </div>
     @endif
-    <div style="padding: 15px;">
-        <h1 style="font-size: 24px; color: #2c3e50; margin-bottom: 20px; text-align: center;">
+    <div class="return-inter-page" style="padding: 15px;">
+        <h1 class="title-user">
             Vérification du VSAV
         </h1>
+        <p class="instruction">Choisissez la source à vérifié</p>
 
         <div style="background-color: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <h2 style="font-size: 18px; margin-bottom: 20px; text-align: center; color: #2c3e50;">
-                Choisissez la source
-            </h2>
-
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+                 <div style="display: flex; flex-direction: column; gap: 12px;">
                 @foreach($sources as $source)
                     <a
                         href="{{ route('front.verif.show', $source->id) }}"
                         style="
                         background-color: #f8f9fa;
-                        border: 2px solid #007bff;
+                        border: 2px solid #B00020;
                         border-radius: 8px;
                         padding: 18px;
                         text-decoration: none;
@@ -54,12 +51,6 @@
                     </p>
                 @endif
             </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="/" style="color: #007bff; text-decoration: underline; font-size: 14px;">
-                ← Retour à l'accueil
-            </a>
         </div>
     </div>
 @endsection

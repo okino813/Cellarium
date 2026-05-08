@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="return-inter-page">
-        <h1 style="font-size: 24px; color: #2c3e50; margin-bottom: 0px; text-align: left;">
+        <h1 class="title-user">
             Retours d'intervention
         </h1>
         <p class="instruction">Renseignez les éléments pris dans la réserve</p>
