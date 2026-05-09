@@ -1,467 +1,172 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="container" style="max-width: 800px;">
-        <div style="margin-bottom: 30px;">
-            <h1 style="font-size: 32px; color: #2c3e50; margin-bottom: 5px;">
-                Modifier l'Item
-            </h1>
-            <p style="color: #7f8c8d; margin: 0;">
-                Modifiez les informations de <strong>{{ $item->name }}</strong>
-            </p>
-        </div>
+    <div class="admin-page">
+        <h1 class="title-user">
+            Modifier l'Item
+        </h1>
+        <p class="instruction">
+            Modifiez les informations de <strong>{{ $item->name }}</strong>
+        </p>
 
-        <div class="card"  style=" padding-left:20px; padding-right:20px;">
-            @if($errors->any())
-                <div class="alert-error" style="margin-bottom: 20px;">
-                    <strong>Erreurs :</strong>
-                    <ul style="margin: 10px 0 0 20px; padding: 0;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+        @if($errors->any())
+            <div class="alert-error" style="margin-bottom: 20px;">
+                <strong>Erreurs :</strong>
+                <ul style="margin: 10px 0 0 20px; padding: 0;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            @if(session('success'))
-                <div class="alert-success" style="margin-bottom: 20px;">
-                    {{ session('success') }}
-                </div>
-            @endif
+        @if(session('success'))
+            <div class="alert-success" style="margin-bottom: 20px;">
+                {{ session('success') }}
+            </div>
+        @endif
 
-            <form action="{{ route('admin.items.update', $item->id) }}" method="POST">
-                @csrf
-                @method('PUT')
+        <form action="{{ route('admin.items.update', $item->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-                <!-- Nom -->
-                <div style="margin-bottom: 20px;">
-                    <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                        Nom de l'item <span style="color: #e74c3c;">*</span>
-                    </label>
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        class="input-field"
-                        placeholder="Ex : Compresses stériles"
-                        value="{{ old('name', $item->name) }}"
-                        required
-                    >
-                    <small style="color: #7f8c8d; font-size: 13px;">Le nom doit être unique et descriptif</small>
-                </div>
+            <!-- Nom -->
+            <div class="card form-item" >
+                <label for="name" style="margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                    Nom de l'item <span style="color: #e74c3c;">*</span>
+                </label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    class="input-field"
+                    placeholder="Ex : Compresses stériles"
+                    value="{{ old('name', $item->name) }}"
+                    required
+                >
 
-                <!-- Est stocké -->
-                <div style="margin-bottom: 30px;">
+{{--                <label for="sortorder" style="margin-bottom: 8px; font-weight: 600; color: #2c3e50;">--}}
+{{--                   Ordre d'affichage--}}
+{{--                </label>--}}
+{{--                <input--}}
+{{--                    type="number"--}}
+{{--                    name="sortorder"--}}
+{{--                    id="sortorder"--}}
+{{--                    class="input-field"--}}
+{{--                    placeholder="Ex : 3"--}}
+{{--                    value="{{ old('name', $item->sortorder) }}"--}}
+{{--                    required--}}
+{{--                >--}}
+            </div>
+
+
+            <!-- Est stocké -->
+            <div class="card form-item" >
+                <div class="field">
                     <label for="is_stock" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
                         Cet item est-il stocké ?
                     </label>
-                    <select
-                        name="is_stock"
-                        id="is_stock"
-                        class="input-field"
-                        style="cursor: pointer;"
-                    >
-                        <option value="1" {{ old('is_stock', $item->is_stock) == 1 ? 'selected' : '' }}>Oui</option>
-                        <option value="0" {{ old('is_stock', $item->is_stock) == 0 ? 'selected' : '' }}>Non</option>
-                    </select>
-                    <small style="color: #7f8c8d; font-size: 13px;">Décochez si l'item n'a pas besoin de gestion de stock</small>
+                    <label class="switch">
+                        <input name="is_stock" id="is_stock" type="checkbox" {{ old('is_stock', $item->is_stock) == 1 ? 'checked' : '' }}>
+                        <span class="slider round"></span>
+                    </label>
                 </div>
 
-                <div class="stock_fields" id="stock_fields">
-
-                    <!-- Quantité en stock -->
-                    <div style="margin-bottom: 20px;">
-                        <label for="total_qty" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                            Quantité en stock <span style="color: #e74c3c;">*</span>
-                        </label>
-                        <input
-                            type="number"
-                            name="total_qty"
-                            id="total_qty"
-                            class="input-field"
-                            placeholder="0"
-                            value="{{ old('total_qty', $item->total_qty) }}"
-                            min="0"
-                            required
-                        >
-                        <small style="color: #7f8c8d; font-size: 13px;">Quantité actuellement disponible</small>
-                    </div>
-
-                    <!-- Seuil de rupture -->
-                    <div style="margin-bottom: 20px;">
-                        <label for="seuil" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                            Seuil d'alerte <span style="color: #e74c3c;">*</span>
-                        </label>
-                        <input
-                            type="number"
-                            name="seuil"
-                            id="seuil"
-                            class="input-field"
-                            placeholder="10"
-                            value="{{ old('seuil', $item->seuil) }}"
-                            min="0"
-                            required
-                        >
-                        <small style="color: #7f8c8d; font-size: 13px;">Vous serez alerté quand le stock atteint ce seuil</small>
-                    </div>
-
-                </div>
-
-                <!-- État -->
-                <div style="margin-bottom: 20px;">
+                <div class="field">
                     <label for="state" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
                         État de l'item
                     </label>
-                    <select
-                        name="state"
-                        id="state"
-                        class="input-field"
-                        style="cursor: pointer;"
-                    >
-                        <option value="1" {{ old('state', $item->state) == 1 ? 'selected' : '' }}>Actif</option>
-                        <option value="0" {{ old('state', $item->state) == 0 ? 'selected' : '' }}>Désactivé</option>
-                    </select>
-                    <small style="color: #7f8c8d; font-size: 13px;">Les items désactivés n'apparaissent pas dans les vérifications</small>
-                </div>
-
-
-
-                <!-- Boutons -->
-                <div style="display: flex; gap: 15px; border-top: 2px solid #dee2e6; padding-top: 20px;">
-                    <button
-                        type="submit"
-                        class="btn btn-success"
-                        style="flex: 1; padding: 14px; font-size: 16px; font-weight: bold;"
-                    >
-                        Enregistrer
-                    </button>
-
-                    <a href="{{ route('admin.items.index') }}"
-                       style="flex: 1; padding: 14px; font-size: 16px; font-weight: bold; text-align: center; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; transition: background 0.3s;"
-                       onmouseover="this.style.backgroundColor='#5a6268'"
-                       onmouseout="this.style.backgroundColor='#6c757d'"
-                    >
-                        Annuler
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="container">
-
-        <div style="margin-bottom: 30px;">
-            <h2 style="font-size: 32px; color: #2c3e50; margin-bottom: 5px;">
-                Ajout d'associations
-            </h2>
-        </div>
-
-        <!-- Ajout d'association -->
-        <div class="card"  style=" padding-left:20px; padding-right:20px;">
-            @if($errors->any())
-                <div class="alert-error" style="margin-bottom: 20px;">
-                    <strong>Erreurs :</strong>
-                    <ul style="margin: 10px 0 0 20px; padding: 0;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            @if(session('success'))
-                <div class="alert-success" style="margin-bottom: 20px;">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <form action="{{ route('admin.attribution.addItemContaining.validate') }}" method="POST">
-                @csrf
-                <div style="margin-bottom: 20px;">
-                    <label for="contenant" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                        Associé {{$item->name}} à :
+                    <label class="switch">
+                        <input name="state" id="state" type="checkbox" {{ old('is_stock', $item->state) == 1 ? 'checked' : '' }}>
+                        <span class="slider round"></span>
                     </label>
-                    <input type="number" name="item" id="item" value="{{$item->id}}" hidden>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <select
-                        name="contenant"
-                        id="contenant"
-                        class="input-field"
-                        style="cursor: pointer;"
-                    >
-                        @foreach($contenants as $contenant)
-                            <option value="{{ $contenant->id }}">{{ $contenant->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <small style="color: #7f8c8d; font-size: 13px;">Les items désactivés n'apparaissent pas dans les vérifications</small>
+            </div>
 
-                <!-- Quantité -->
+            <div class="card stock_fields" id="stock_fields">
+
+                <!-- Quantité en stock -->
                 <div style="margin-bottom: 20px;">
-                    <label for="qty" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                        Quantité <span style="color: #e74c3c;">*</span>
+                    <label for="total_qty" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                        Quantité en stock <span style="color: #e74c3c;">*</span>
                     </label>
                     <input
                         type="number"
-                        name="qty"
-                        id="qty"
+                        name="total_qty"
+                        id="total_qty"
                         class="input-field"
                         placeholder="0"
-                        value=""
+                        value="{{ old('total_qty', $item->total_qty) }}"
                         min="0"
                         required
                     >
+                    <small style="color: #7f8c8d; font-size: 13px;">Quantité actuellement disponible</small>
                 </div>
 
-                <button
-                    type="submit"
-                    class="btn btn-success"
-                    style="flex: 1; padding: 14px; font-size: 16px; font-weight: bold;"
-                >
-                    Enregistrer
-                </button>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- Listes des assosiation -->
-    <div class="container" >
-        <div class="card" style="padding-left:10px;padding-right:10px;">
-            <h2 style="font-size: 24px; color: #2c3e50; margin-bottom: 20px; border-bottom: 3px solid #e74c3c; padding-bottom: 10px;">
-                Associations actuel
-            </h2>
-
-            @if(isset($item->containings) && $item->containings->count() > 0)
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                        <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
-                            <th style="padding: 12px; text-align: left; font-weight: 600; color: #2c3e50;">Nom</th>
-                            <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Quantité affecté</th>
-                            <th style="padding: 12px; text-align: center; font-weight: 600; color: #2c3e50;">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($item->containings as $containing)
-                            <tr style="border-bottom: 1px solid #dee2e6; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.backgroundColor='white'"
-                                data-containing-id="{{ $containing->id }}">
-                                <td style="padding: 12px; font-weight: 500;">{{ $containing->name }}</td>
-                                <td style="padding: 12px; text-align: center;">
-                                        <span class="qty-value" style="font-size: 18px; font-weight: bold; color: #f39c12;">
-                                            {{ $containing->pivot->qty_affect }}
-                                        </span>
-                                </td>
-                                <td style="padding: 12px; text-align: center;">
-                                    <!-- Bouton Modifier -->
-                                    <button
-                                        class="btn-edit"
-                                        data-containing-id="{{ $containing->id }}"
-                                        data-qty="{{ $containing->pivot->qty_affect }}"
-                                        style="padding: 8px 16px; font-size: 14px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer;"
-                                        onclick="showEditInput(this)"
-                                    >
-                                        Modifier
-                                    </button>
-
-                                    <!-- Conteneur pour l'input (caché par défaut) -->
-                                    <div
-                                        id="edit-container-{{ $containing->id }}"
-                                        style="display: none; margin-top: 10px;"
-                                    >
-                                        <input
-                                            type="number"
-                                            class="edit-qty-input"
-                                            value="{{ $containing->pivot->qty_affect }}"
-                                            min="0"
-                                            style="width: 80px; padding: 8px; text-align: center; font-size: 16px; border: 1px solid #ced4da; border-radius: 4px;"
-                                        />
-                                        <button
-                                            class="btn-save"
-                                            data-containing-id="{{ $containing->id }}"
-                                            data-item-id="{{ $item->id }}"
-                                            style="margin-left: 5px; padding: 8px 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;"
-                                            onclick="saveQty(this)"
-                                        >
-                                            Enregistrer
-                                        </button>
-                                        <button
-                                            class="btn-cancel"
-                                            id="cancel-btn"
-                                            style="margin-left: 5px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;"
-                                            onclick="cancelEdit(this)"
-                                        >
-                                            Annuler
-                                        </button>
-                                    </div>
-
-                                    <!-- Bouton Supprimer (inchangé) -->
-                                    <a href="{{ route("admin.attribution.ItemContaining.delete", [$containing->id, $item->id])}}"
-                                       class="btn"
-                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet item ?')"
-                                       style="padding: 6px 12px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; margin-top:10px; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#c82333'" onmouseout="this.style.backgroundColor='#dc3545'">
-                                        Supprimer
-                                    </a>
-                                </td>
-
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                <!-- Seuil de rupture -->
+                <div style="margin-bottom: 20px;">
+                    <label for="seuil" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                        Seuil d'alerte <span style="color: #e74c3c;">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        name="seuil"
+                        id="seuil"
+                        class="input-field"
+                        placeholder="10"
+                        value="{{ old('seuil', $item->seuil) }}"
+                        min="0"
+                        required
+                    >
+                    <small style="color: #7f8c8d; font-size: 13px;">Vous serez alerté quand le stock atteint ce seuil</small>
                 </div>
-            @else
-                <div style="text-align: center; padding: 40px 0; color: #28a745;">
-                    <p style="color: #7f8c8d; margin-top: 10px;">
-                        Associé à aucun contenant
-                    </p>
-                </div>
-            @endif
-        </div>
-    </div>
 
-    <!-- Informations supplémentaires -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px;margin-top: 20px;">
-        <div style="padding: 15px; background-color: #fff3e0; border-radius: 8px; border-left: 4px solid #FF9800;">
-            <p style="margin: 0; font-size: 12px; color: #E65100; font-weight: 600;">MODIFIÉ LE</p>
-            <p style="margin: 5px 0 0 0; font-size: 14px; color: #BF360C;">{{ $item->updated_at->format('d/m/Y H:i') }}</p>
-        </div>
-    </div>
+            </div>
 
-    <!-- Zone de danger -->
-    <div style="margin-top: 30px; margin: 20px; padding: 20px; background-color: #fff5f5; border-radius: 8px; border: 2px solid #e74c3c;">
-        <h3 style="color: #e74c3c; margin: 0 0 10px 0; font-size: 18px;">Zone de danger</h3>
-        <p style="color: #721c24; margin: 0 0 15px 0; font-size: 14px;">
-            La suppression de cet item est irréversible. Toutes les données associées seront perdues.
-        </p>
-        <a
-            href="{{ route('admin.items.delete', $item->id) }}"
-            onclick="return confirm('⚠️ ATTENTION ⚠️\n\nÊtes-vous absolument sûr de vouloir supprimer cet item ?\n\nCette action est IRRÉVERSIBLE et supprimera :\n- L\'item {{ $item->name }}\n- Son historique de mouvements\n- Toutes ses attributions\n\nTapez OK pour confirmer la suppression.')"
-            style="display: inline-block; padding: 12px 24px; background-color: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; transition: background 0.3s;"
-            onmouseover="this.style.backgroundColor='#c82333'"
-            onmouseout="this.style.backgroundColor='#e74c3c'"
-        >
-            Supprimer définitivement cet item
-        </a>
-    </div>
-    </div>
-
-    <style>
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            h1 {
-                font-size: 24px !important;
-            }
-            .btn {
-                font-size: 14px !important;
-                padding: 12px !important;
-            }
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const isStockSelect = document.getElementById('is_stock');
-            const stockFields = document.getElementById('stock_fields');
-            const seuil = document.getElementById('seuil');
-            const totalQtyInput = document.getElementById('total_qty');
-            const seuilInput = document.getElementById('seuil');
-
-            // Fonction pour masquer/afficher les champs
-            function toggleStockFields() {
-                if (isStockSelect.value === '0') {
-                    stockFields.style.display = 'none';
-                    totalQtyInput.value = 0;
-                    seuil.value = 0;
-                } else {
-                    stockFields.style.display = 'block';
-                }
-            }
-
-            // Appelle la fonction au chargement de la page
-            toggleStockFields();
-
-            // Ajoute un écouteur d'événement pour le changement de sélection
-            isStockSelect.addEventListener('change', toggleStockFields);
-        });
-    </script>
-
-    <script>
-        // Affiche l'input pour modifier la quantité
-        function showEditInput(button) {
-            const containingId = button.getAttribute('data-containing-id');
-            const container = document.getElementById(`edit-container-${containingId}`);
-            container.style.display = 'block';
-            button.style.display = 'none';
-        }
-
-        // Annule l'édition et cache l'input
-        function cancelEdit(button) {
-            const container = button.parentElement;
-            const row = container.closest('tr');
-            const containingId = row.getAttribute('data-containing-id');
-            const editButton = row.querySelector(`button.btn-edit[data-containing-id="${containingId}"]`);
-            container.style.display = 'none';
-            editButton.style.display = 'inline-block';
-        }
+            <a class="btn-delete"
+               href="{{ route('admin.items.delete', $item->id) }}"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M136.7 5.9L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-8.7-26.1C306.9-7.2 294.7-16 280.9-16L167.1-16c-13.8 0-26 8.8-30.4 21.9zM416 144L32 144 53.1 467.1C54.7 492.4 75.7 512 101 512L347 512c25.3 0 46.3-19.6 47.9-44.9L416 144z"/></svg>
+                Supprimer
+            </a>
 
 
-        // Enregistre la nouvelle quantité (à adapter avec une requête AJAX)
-        function saveQty(button) {
-            const containingId = button.getAttribute('data-containing-id');
-            const itemId = button.getAttribute('data-item-id');
-            const input = button.parentElement.querySelector('.edit-qty-input');
-            const newQty = input.value;
-            const editButton = document.querySelector(`.btn-edit[data-containing-id="${containingId}"]`);
-            const qtySpan = document.querySelector(`tr[data-containing-id="${containingId}"] .qty-value`);
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+            <!-- Boutons -->
+            <button
+                type="submit"
+                class="btn-save btn-success"
+            >
+                Enregistrer
+            </button>
+        </form>
 
-            if (!csrfToken) {
-                console.error("CSRF token non trouvé. Assurez-vous que la balise meta est présente dans le HTML.");
-                return;
-            }
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var isStockSelect = document.getElementById('is_stock');
+                var stockFields = document.getElementById('stock_fields');
+                const seuil = document.getElementById('seuil');
+                const totalQtyInput = document.getElementById('total_qty');
+                const seuilInput = document.getElementById('seuil');
 
-            console.log(`Nouvelle quantité pour le contenant ${containingId} : ${newQty}`);
-            fetch(`{{ route('admin.attribution.addItemContaining.update', $contenant->id)  }}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                },
-                body: JSON.stringify({
-                    containing_id: containingId,
-                    item_id: itemId,
-                    qty: newQty,
-                }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        if (qtySpan) {
-                            qtySpan.textContent = newQty;
-                        }
-                        alert('Quantité mise à jour avec succès !');
+                // Fonction pour masquer/afficher les champs
+                function toggleStockFields() {
+                    if (!isStockSelect.checked) {
+                        stockFields.style.display = 'none';
                     } else {
-                        alert('Erreur lors de la mise à jour.');
+                        stockFields.style.display = 'block';
                     }
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                    alert('Une erreur est survenue.');
-                });
+                }
 
+                // Appelle la fonction au chargement de la page
+                toggleStockFields();
 
-            // Met à jour l'affichage (simulation)
-            if (qtySpan) {
-                qtySpan.textContent = newQty;
-            }
+                // Ajoute un écouteur d'événement pour le changement de sélection
+                isStockSelect.addEventListener('change', toggleStockFields);
+            });
+        </script>
 
-            // Cache l'input et réaffiche le bouton Modifier
-            button.parentElement.style.display = 'none';
-            editButton.style.display = 'inline-block';
-        }
-    </script>
+    </div>
 
 @endsection

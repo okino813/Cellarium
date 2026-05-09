@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\DB;
 class ItemController extends Controller
 {
     public function index(Request $request){
-        $items = Item::all()->sortBy(function ($item) {
-            // D'abord par is_stock (true en premier)
-            return [$item->is_stock ? 0 : 1, $item->total_qty];
-        });
+        $items = Item::all()->sortBy("name");
+//        $items = Item::orderByRaw('CASE WHEN sortorder = 0 THEN 1 ELSE 0 END')
+////            ->orderBy('sortorder', 'asc')
+//            ->orderBy('name', 'asc')
+//            ->get();
 
         return view('admin.items.index', compact('items'));
     }
@@ -29,16 +30,30 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string',
             'total_qty' => 'required|numeric:',
-            'state' => 'required|boolean',
-            'is_stock' => 'required|boolean'
+            'sortorder' => 'required|numeric:',
         ]);
+
+        if($request->has('is_stock')){
+            $is_stock = 1;
+        }
+        else{
+            $is_stock = 0;
+        }
+
+        if($request->has('state')){
+            $state = 1;
+        }
+        else{
+            $state = 0;
+        }
 
         $item = Item::create([
             'name' => $request->name,
             'total_qty' => $request->total_qty,
-            'state' => $request->state,
+            'state' => $state,
             'seuil' => $request->seuil,
-            'is_stock' => $request->is_stock
+            'is_stock' => $is_stock,
+            'sortorder' => $request->sortorder,
         ]);
 
         return redirect()->route('admin.items.index');
@@ -58,19 +73,35 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string',
             'total_qty' => 'required|numeric:',
-            'state' => 'required|boolean',
-            'is_stock' => 'required|boolean'
+            'sortorder' => 'required|numeric:',
         ]);
 
         $item = Item::find($id);
 
+        if($request->has('is_stock')){
+            $is_stock = 1;
+        }
+        else{
+            $is_stock = 0;
+        }
+
+        if($request->has('state')){
+            $state = 1;
+        }
+        else{
+            $state = 0;
+        }
+
         $item->update([
             'name' => $request->name,
             'total_qty' => $request->total_qty,
-            'state' => $request->state,
+            'state' => $state,
             'seuil' => $request->seuil,
-            'is_stock' => $request->is_stock
+            'is_stock' => $is_stock,
+            'sortorder' => $request->sortorder,
         ]);
+
+        $item->save();
 
         return redirect()->route('admin.items.index');
     }
