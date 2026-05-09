@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.app')
 
 @section('content')
     <div class="container" style="max-width: 800px;">

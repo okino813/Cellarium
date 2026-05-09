@@ -1,6 +1,6 @@
 <nav>
     @if(session()->has('code'))
-    <div class="nav-container">
+        <div class="nav-container">
             <div>
                 <p>Bonjour, {{ session('firstname', '')}} {{ session('lastname', '')}} !</p>
             </div>
@@ -14,7 +14,13 @@
                         </svg>
 
                         <div class="overlay-action-user" id="overlay_action_user">
-                            <a href="{{ route('admin.index') }}">Passer en mode Admin</a>
+                            @if(session('isAdmin') or session('isAdminChief'))
+                                @if(session('mode') == "user")
+                                <a href="{{ route('admin.index') }}">Passer en mode Admin</a>
+                                @else
+                                    <a href="{{ route('home') }}">Passer en mode Utili.</a>
+                                @endif
+                            @endif
                             <a href="{{ route('logout') }}">Déconnexion</a>
                         </div>
                     </div>
@@ -27,6 +33,6 @@
                     }
                 </script>
             </div>
-    </div>
+        </div>
     @endif
 </nav>

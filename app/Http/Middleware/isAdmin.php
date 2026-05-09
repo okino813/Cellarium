@@ -38,7 +38,9 @@ class isAdmin
 
                     $request->session()->put('firstname', $user->firstname);
                     $request->session()->put('lastname', $user->lastname);
-                    $request->session()->put('isAdmin', true);
+                    $request->session()->put('isAdmin', $user->isAdmin);
+                    $request->session()->put('isAdminChief', $user->isAdminChief);
+                    $request->session()->put('mode', "admin");
 
                     return $next($request);
                 }

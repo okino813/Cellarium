@@ -35,7 +35,6 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin', [AdminController::class, 'index'])->name("admin.index");
     Route::post('/admin/logout', [LoginController::class, 'logoutAdmin'])->name("admin.logout");
 
-
     // Crud Item
     Route::get('/admin/items', [AdminItemController::class, 'index'])->name("admin.items.index");
     Route::get('/admin/items/create', [AdminItemController::class, 'create'])->name("admin.items.create");
@@ -51,7 +50,6 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/sources/edit/{id}', [AdminsourceController::class, 'edit'])->name("admin.sources.edit");
     Route::post('/admin/sources/update/{id}', [AdminsourceController::class, 'update'])->name("admin.sources.update");
     Route::get('/admin/sources/delete/{id}', [AdminsourceController::class, 'destroy'])->name("admin.sources.delete");
-
 
     // Crud Contenant
     Route::get('/admin/containings', [AdminContainingController::class, 'index'])->name("admin.containings.index");

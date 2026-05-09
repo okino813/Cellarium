@@ -44,6 +44,8 @@ class isLogin
 
                     $request->session()->put('firstname', $user->firstname);
                     $request->session()->put('lastname', $user->lastname);
+                    $request->session()->put('isAdmin', $user->isAdmin);
+                    $request->session()->put('isAdminChief', $user->isAdminChief);
                     $request->session()->put('mode', "user");
 
                     return $next($request);

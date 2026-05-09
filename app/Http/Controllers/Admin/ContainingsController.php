@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\Containing;
 use App\Models\Source;
 use Illuminate\Http\Request;
@@ -11,10 +11,9 @@ use Illuminate\Http\Request;
 class ContainingsController extends Controller
 {
     public function index(Request $request){
-        $id = $request->session()->get("idAdmin");
-        $admin = Admin::where('id', $id)->first();
-
-        $containings = Containing::with("source")->get();
+        $matricule = $request->session()->get('matricule');
+        $admin = User::where('matricule', $matricule)->first();
+        $containings = Containing::with("source")->where('firestation_id', $admin->firestation_id)->get();
 
         return view('admin.containings.index', compact('containings'));
     }
