@@ -7,6 +7,92 @@
         padding: 15px;
     }
 
+    .btn-add{
+        position: fixed;
+        height: 50px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 80px;
+        right: 20px;
+        background: #F9DEDC;
+        fill: #b00020;
+        border-radius: 10px;
+    }
+
+    .btn-add svg{
+        scale: 0.5;
+    }
+
+
+    .list-item-admin{
+        display: flex;
+        flex-direction: column;
+        gap:5px;
+        padding-bottom: 70px;
+    }
+
+    .list-item-admin .card{
+        display: flex;
+        color: black;
+        text-decoration: none;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .list-item-admin .card .name-seuil{
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .list-item-admin .card .qty-status{
+        text-align: right;
+    }
+    .list-item-admin .card .qty-status .qty{
+        font-weight: bold;
+    }
+
+
+    .list-item-admin .card .qty-status .qty .background{
+        background: #D2CED5;
+        border-radius: 10px;
+        font-size: 10px;
+        padding: 5px;
+        color: black;
+        text-align: center;
+    }
+
+    .list-item-admin .card .qty-status .qty .background .print{
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .background-rupture{
+        background: #F9DEDC;
+        color: #b00020;
+        padding: 5px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 10px;
+    }
+    .seuil{
+        font-size: 10px;
+    }
+    .background-ok{
+        background: #D5DBDA;
+        color: #155724;
+        padding: 5px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 10px;
+
+    }
+
+
+
     .card-stat-list{
         display: flex;
         gap: 20px;
