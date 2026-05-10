@@ -34,10 +34,13 @@ class LoginController extends Controller
         if ($firestation && $request->code === $firestation->code) {
             // Vérifie si le matricule existe en db
             $user = User::where('matricule', $request->matricule)->first();
-            if($user){
+            if($user and !$user->isAdmin){
                 // Stocke le code et le prénom en session
                 $request->session()->put('matricule', $user->matricule);
                 $request->session()->put('code', $firestation->code);
+            }
+            else{
+                return redirect('/login')->with('error', 'Compte admin, conenctez-vous avec le formulaire adéquate');
             }
 
             // Redirige vers la page d'accueil
@@ -52,24 +55,30 @@ class LoginController extends Controller
     {
         $request->validate([
             'code' => 'required',
-            'email' => 'required|email',
+            'matricule' => 'required',
             'password' => 'required'
         ]);
 
+//        dd($request->all());
+
         // Vérifie si le code est valide
         $firestation = Firestation::where('code', $request->code)->first();
-        if ($firestation && $request->code === $firestation->code) {
-            // On vérifie l'email et le password
-            $admin = Admin::where('email', $request->email)->first();
-            // le mot de passe est hasher. Il faut donc le vérifié
-            if ($admin && Hash::check($request->password, $admin->password)) {
-                // Stocke le code et le prénom en session
-                $request->session()->put('code', $request->code);
-                $request->session()->put('idAdmin', $admin->id);
-                $request->session()->put('email', $request->email);
-                $request->session()->put('is_admin', true);
 
-                return redirect()->route('admin.index');
+        if ($firestation && $request->code === $firestation->code) {
+
+            // On vérifie l'email et le password
+            $admin = User::where('matricule', $request->matricule)->first();
+            if($admin->firestation_id == $firestation->id){
+                if($admin->isAdmin){
+                    // le mot de passe est hasher. Il faut donc le vérifié
+                    if (Hash::check($request->password, $admin->password)) {
+                        // Stocke le code et le prénom en session
+                        $request->session()->put('code', $request->code);
+                        $request->session()->put('isAdmin', true);
+                        $request->session()->put('matricule', $request->matricule);
+                        return redirect()->route('admin.index');
+                    }
+                }
             }
 
 
@@ -84,8 +93,8 @@ class LoginController extends Controller
     public function logout(Request $request){
         // Delete les session
         $request->session()->forget('code');
-        $request->session()->forget('email');
-        $request->session()->forget('is_admin');
+        $request->session()->forget('matricule');
+        $request->session()->forget('isAdmin');
         $request->session()->forget('idAdmin');
 
         return redirect('/');
@@ -94,9 +103,10 @@ class LoginController extends Controller
     public function logoutAdmin(Request $request){
         // Delete les session
         $request->session()->forget('code');
-        $request->session()->forget('email');
-        $request->session()->forget('is_admin');
+        $request->session()->forget('matricule');
+        $request->session()->forget('isAdmin');
         $request->session()->forget('idAdmin');
+        $request->session()->forget('mode');
 
         return redirect()->route('admin.index');
     }

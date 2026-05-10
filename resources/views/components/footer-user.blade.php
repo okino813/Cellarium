@@ -35,7 +35,7 @@
 
             </div>
 
-        @else
+        @elseif(session()->has('mode') and session('mode') == "user")
             <div class="link_list">
                 <!-- Liste des menu -->
                 <div class="home">

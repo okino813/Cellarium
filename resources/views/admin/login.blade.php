@@ -11,7 +11,7 @@
     <div class="card" style="max-width: 500px; margin: 0px auto; padding:20px;">
         <div style="text-align: center; margin-bottom: 30px;">
             <h1 style="font-size: 32px; color: #2c3e50; margin-bottom: 10px;">
-                🔧 Administration
+                Administration
             </h1>
             <p style="color: #7f8c8d;">
                 Connectez-vous pour accéder au back-office
@@ -51,16 +51,16 @@
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">
-                    Adresse email :
+                <label for="matricule" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                    Matricule :
                 </label>
                 <input
-                    type="email"
-                    id="email"
-                    name="email"
+                    type="text"
+                    id="matricule"
+                    name="matricule"
                     class="input-field"
-                    value="{{ old('email') }}"
-                    placeholder="admin@caserne.fr"
+                    value="{{ old('matricule') }}"
+                    placeholder="123456"
                     required
                 >
             </div>

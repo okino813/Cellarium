@@ -39,6 +39,36 @@
         padding-bottom: 70px;
     }
 
+    .list-contain-admin{
+        display: flex;
+        flex-direction: column;
+        gap:5px;
+        padding-bottom: 70px;
+        text-decoration: none;
+    }
+
+    .list-contain-admin .card{
+        text-decoration: none;
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .list-contain-admin .card .text{
+        display: flex;
+        flex-direction: column;
+        color: black;
+    }
+
+    .list-contain-admin .card .name{
+        font-size: 15px;
+    }
+
+    .list-contain-admin .card .source{
+        font-size: 10px;
+    }
+
     .form-item, .stock_fields{
         width: 100%;
         padding: 10px !important;
