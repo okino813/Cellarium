@@ -55,6 +55,16 @@
         justify-content: space-between;
     }
 
+    .list-contain-admin .source{
+        text-decoration: none;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+
     .list-contain-admin .card .text{
         display: flex;
         flex-direction: column;
@@ -63,6 +73,56 @@
 
     .list-contain-admin .card .name{
         font-size: 15px;
+    }
+
+    .list-item-contain{
+        padding:5px !important;
+    }
+
+    .list-item-contain .item{
+        display: flex;
+        justify-content: space-between;
+        margin: 5px;
+    }
+
+    .list-item-contain .item .qty-value{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .list-item-contain .item .qty-value .left{
+        border-top-left-radius: 20px 20px;
+        border-bottom-left-radius: 20px 20px;
+        border:  2px solid #000000;
+        border-right: 0px;
+    }
+
+    .list-item-contain .item .qty-value .right{
+        border-top-right-radius: 20px 20px;
+        border-bottom-right-radius: 20px 20px;
+        border:  2px solid #000000;
+        border-left: 0px;
+
+
+    }
+
+    .list-item-contain .item .qty-value button{
+        width: 40px;
+        height: 40px;
+        background: #F4DDDD;
+        font-size: 20px;
+    }
+
+    .list-item-contain .item .qty-value input{
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        border:  2px solid #000000;
+        border-left: 0px;
+        border-right: 0px;
+
     }
 
     .list-contain-admin .card .source{
@@ -254,6 +314,7 @@
         justify-content: space-between;
         padding: 10px;
         text-decoration: none;
+        margin-bottom: 5px;
     }
     .list-item-rupture .card .name{
         color: black;

@@ -59,8 +59,6 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-//        dd($request->all());
-
         // Vérifie si le code est valide
         $firestation = Firestation::where('code', $request->code)->first();
 
@@ -68,8 +66,10 @@ class LoginController extends Controller
 
             // On vérifie l'email et le password
             $admin = User::where('matricule', $request->matricule)->first();
-            if($admin->firestation_id == $firestation->id){
-                if($admin->isAdmin){
+
+
+            if ($admin and $admin->isAdmin) {
+                if($admin->firestation_id == $firestation->id){
                     // le mot de passe est hasher. Il faut donc le vérifié
                     if (Hash::check($request->password, $admin->password)) {
                         // Stocke le code et le prénom en session
@@ -83,7 +83,7 @@ class LoginController extends Controller
 
 
             // Mot de passe invalide : redirige vers le formulaire avec une erreur
-            return redirect('/admin/login')->with('error', "Mot de passe invalide");
+            return redirect('/admin/login')->with('error', "Information invalide");
         }
 
         // Code invalide : redirige vers le formulaire avec une erreur

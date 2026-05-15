@@ -61,12 +61,17 @@ class AttributionController extends Controller
 
     public function ItemContainingUpdate(Request $request, $id)
     {
-        $request->validate(['qty' => 'required|integer|min:1']);
+        $request->validate(['qty' => 'required|integer']);
 
         $containing = Containing::findOrFail($id);
         $item = Item::findOrFail($request->item_id);
 
-        $containing->items()->updateExistingPivot($item->id, ['qty_affect' => $request->qty]);
+        if($request->qty > 0){
+            $containing->items()->updateExistingPivot($item->id, ['qty_affect' => $request->qty]);
+        }
+        else{
+            $containing->items()->detach($item->id);
+        }
 
         return response()->json([
             'success' => true,

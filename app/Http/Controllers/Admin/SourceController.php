@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Models\User;
+use App\Models\Firestation;
 use App\Models\Source;
 use Illuminate\Http\Request;
 
@@ -27,16 +28,17 @@ class SourceController extends Controller
             'name' => 'required|string'
         ]);
 
-        $email = $request->session()->get("email");
+        $matricule = $request->session()->get("matricule");
         $code = $request->session()->get("code");
-        $id = $request->session()->get("idAdmin");
+
+        $caserne = Firestation::where('code', $code)->first();
 
         // On récupère l'utilisateur
-        $admin = Admin::where('id', $id)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
         $source = Source::create([
             'name' => $request->name,
-            'firestation_id' => $admin->firestation_id
+            'firestation_id' => $caserne->id
         ]);
 
         return redirect()->route('admin.sources.index');
