@@ -82,7 +82,6 @@
                         class="input-field"
                         placeholder="0"
                         min="0"
-                        required
                     >
                     <small style="color: #7f8c8d; font-size: 13px;">Quantité actuellement disponible</small>
                 </div>
@@ -99,7 +98,6 @@
                         class="input-field"
                         placeholder="10"
                         min="0"
-                        required
                     >
                     <small style="color: #7f8c8d; font-size: 13px;">Vous serez alerté quand le stock atteint ce seuil</small>
                 </div>

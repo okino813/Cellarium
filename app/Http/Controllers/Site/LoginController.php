@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Site;
 
-use App\Models\Admin;
 use App\Models\Firestation;
 use App\Models\User;
 use Illuminate\Http\Request;

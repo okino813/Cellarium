@@ -1,16 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController as AdminAdminController;
-use App\Http\Controllers\Admin\ContainingsController as AdminContainingController;
-use App\Http\Controllers\Admin\ItemController as AdminItemController;
-use App\Http\Controllers\Admin\SourceController as AdminsourceController;
-use App\Http\Controllers\Admin\MouvementController as AdminMouvementController;
-use App\Http\Controllers\Admin\AttributionController as AdminAtributionController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Front\VerifController;
-use App\Http\Controllers\Front\InterController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Site\Admin\AttributionController as AdminAtributionController;
+use App\Http\Controllers\Site\Admin\ContainingsController as AdminContainingController;
+use App\Http\Controllers\Site\Admin\ItemController as AdminItemController;
+use App\Http\Controllers\Site\Admin\MouvementController as AdminMouvementController;
+use App\Http\Controllers\Site\Admin\SourceController as AdminsourceController;
+use App\Http\Controllers\Site\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Site\AdminController;
+use App\Http\Controllers\Site\Front\InterController;
+use App\Http\Controllers\Site\Front\VerifController;
+use App\Http\Controllers\Site\LoginController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isLogin;
@@ -59,30 +58,27 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::put('/admin/containings/update/{id}', [AdminContainingController::class, 'update'])->name("admin.containings.update");
     Route::get('/admin/containings/delete/{id}', [AdminContainingController::class, 'destroy'])->name("admin.containings.delete");
 
-    // Crud Admin
-    Route::get('/admin/admins', [AdminAdminController::class, 'index'])->name("admin.admins.index");
-    Route::get('/admin/admins/create', [AdminAdminController::class, 'create'])->name("admin.admins.create");
-    Route::post('/admin/admins/store', [AdminAdminController::class, 'store'])->name("admin.admins.store");
-    Route::get('/admin/admins/edit/{id}', [AdminAdminController::class, 'edit'])->name("admin.admins.edit");
-    Route::put('/admin/admins/update/{id}', [AdminAdminController::class, 'update'])->name("admin.admins.update");
-    Route::post('/admin/admins/password/update/{id}', [AdminAdminController::class, 'updatePassword'])->name("admin.admins.updatePassword");
-    Route::get('/admin/admins/delete/{id}', [AdminAdminController::class, 'destroy'])->name("admin.admins.delete");
-
-    Route::get('/admin/attribution/', [AdminAtributionController::class, 'index'])->name("admin.attribution.index");
-
-// CRUD Item-Containing
+    // CRUD Item-Containing
     Route::get('/admin/attribution/addItemContaining', [AdminAtributionController::class, 'addItemContaining'])->name('admin.attribution.addItemContaining');
     Route::post('/admin/attribution/addItemContaining/validate', [AdminAtributionController::class, 'addItemContainingValidate'])->name('admin.attribution.addItemContaining.validate');
     Route::get('/admin/attribution/addItemContaining/edit/{containing_id}/{item_id}', [AdminAtributionController::class, 'editItemContaining'])->name('admin.attribution.addItemContaining.edit');
     Route::post('/admin/attribution/addItemContaining/update/{id}', [AdminAtributionController::class, 'ItemContainingUpdate'])->name('admin.attribution.addItemContaining.update');
     Route::get('/admin/attribution/addItemContaining/delete/{containing_id}/{item_id}', [AdminAtributionController::class, 'ItemContainingDelete'])->name('admin.attribution.ItemContaining.delete');
 
-// CRUD Containing-Source
+    // CRUD Containing-Source
     Route::get('/admin/attribution/addContainingSource', [AdminAtributionController::class, 'addContainingSource'])->name('admin.attribution.addContainingSource');
     Route::post('/admin/attribution/addContainingSource/validate', [AdminAtributionController::class, 'addContainingSourceValidate'])->name('admin.attribution.addContainingSource.validate');
     Route::get('/admin/attribution/editContainingSource/{containing_id}/{source_id}', [AdminAtributionController::class, 'editContainingSource'])->name('admin.attribution.editContainingSource');
     Route::post('/admin/attribution/updateContainingSource/{id}', [AdminAtributionController::class, 'ContainingSourceUpdate'])->name('admin.attribution.updateContainingSource');
     Route::get('/admin/attribution/deleteContainingSource/{containing_id}', [AdminAtributionController::class, 'ContainingSourceDelete'])->name('admin.attribution.deleteContainingSource');
+
+    // Crud Utilisateur
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name("admin.user.index");
+    Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name("admin.user.create");
+    Route::post('/admin/users/store', [AdminUserController::class, 'store'])->name("admin.user.store");
+    Route::get('/admin/users/edit/{id}', [AdminUserController::class, 'edit'])->name("admin.user.edit");
+    Route::put('/admin/users/update/{id}', [AdminUserController::class, 'update'])->name("admin.user.update");
+    Route::get('/admin/users/delete/{id}', [AdminUserController::class, 'destroy'])->name("admin.user.delete");
 
     Route::get('/admin/mouvement/index', [AdminMouvementController::class, 'index'])->name("admin.movement.index");
 

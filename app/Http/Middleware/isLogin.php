@@ -54,6 +54,11 @@ class isLogin
                 return redirect('/login');
             }
         }
+        // On suprime les valeurs de session
+        $request->session()->forget('code');
+        $request->session()->forget('matricule');
+        $request->session()->forget('isAdmin');
+        $request->session()->forget('mode');
 
         // Session invalide : redirection vers le formulaire de login
         return redirect('/login');

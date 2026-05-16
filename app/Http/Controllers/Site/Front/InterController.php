@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Site\Front;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Http\Controllers\Site\Controller;
+use App\Models\Firestation;
 use App\Models\Item;
 use App\Models\Movement;
+use App\Models\User;
 use App\Services\MailGunService;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,14 @@ class InterController extends Controller
         $this->mailgunService = $mailgunService;
     }
     public function index(Request $request){
-        $items = Item::all()->sortBy("name");
+        // On récupère l'utiliseur
+
+        $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
+
+        $items = Item::where('firestation_id', $user->firestation_id)->get()->sortBy("name");
 
         return view('front.inter', compact('items'  ));
     }
@@ -28,10 +36,12 @@ class InterController extends Controller
             'comment' => 'nullable|string',
         ]);
 
-        $firstname = $request->session()->get('firstname');
+        $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
         $movementsData = [];
-
         foreach($request->all() as $key => $value){
             if(str_starts_with($key, 'id')){
                 $id = substr($key, 2);
@@ -48,7 +58,7 @@ class InterController extends Controller
                         if($item->total_qty <= $item->seuil){
                             // On envoi un mail
                             //On récupère l'adresse mail des admins
-                            $admins = Admin::all();
+                            $admins = User::where('isAdmin', 1)->where('firestation_id', $caserne->id)->get();
                             $emails = [];
 
                             // On génère le message
@@ -74,7 +84,7 @@ class InterController extends Controller
 
         if(!empty($movementsData)){
             $movement = Movement::create([
-                'firstname' => $firstname,
+                'user_id' => $user->id,
                 'comment' => $validated['comment'],
             ]);
 

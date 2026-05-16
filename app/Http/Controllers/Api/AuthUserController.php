@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Site\Controller;
 use App\Models\Firestation;
 use Illuminate\Http\Request;
 

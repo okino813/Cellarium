@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Site\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Http\Controllers\Site\Controller;
+use App\Models\Containing;
 use App\Models\Firestation;
 use App\Models\Item;
-use App\Models\User;
-use App\Models\Containing;
 use App\Models\Source;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ContainingsController extends Controller
 {
     public function index(Request $request){
-        $matricule = $request->session()->get('matricule');
-        $admin = User::where('matricule', $matricule)->first();
+        $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
+
+
         $containings = Containing::with("source")->where('firestation_id', $admin->firestation_id)->get();
 
         return view('admin.containings.index', compact('containings'));
@@ -24,7 +27,10 @@ class ContainingsController extends Controller
     public function create(Request $request){
         // On récupère les sources
         $matricule = $request->session()->get("matricule");
-        $admin = User::where('matricule', $matricule)->first();
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
+
         $sources = Source::where('firestation_id', $admin->firestation_id)->get();
 
         return view('admin.containings.create', compact('sources'));
@@ -32,22 +38,17 @@ class ContainingsController extends Controller
 
     public function store(Request $request){
         // On vérifie les données
-
         $request->validate([
             'name' => 'required|string',
             'source_id' => 'required|integer',
         ]);
 
-        // Il faudrait vérifier si la source appartiens bien a la caserne
-        $code = $request->session()->get("code");
         $matricule = $request->session()->get("matricule");
-
+        $code = $request->session()->get("code");
         $caserne = Firestation::where('code', $code)->first();
-
-        $source = Source::where("firestation_id", $caserne->id)->find($request->source_id);
-
         $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
+        $source = Source::where("firestation_id", $caserne->id)->where('id',$request->source_id)->first();
 
         $containing = Containing::create([
             'name' => $request->name,
@@ -59,12 +60,13 @@ class ContainingsController extends Controller
     }
 
     public function edit(Request $request, $id){
-        // On récupère le user connecté
         $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
-        $admin = User::where('matricule', $matricule)->first();
         // On récupère le contenant
-        $contenant = Containing::with('items')->with("source")->where('firestation_id', $admin->firestation_id)->findOrFail($id);
+        $contenant = Containing::with('items')->with("source")->where('firestation_id', $admin->firestation_id)->where('id', $id)->first();
 
         $sources = Source::where('firestation_id', $admin->firestation_id)->get();
 
@@ -80,7 +82,12 @@ class ContainingsController extends Controller
             'source_id' => 'required|integer',
         ]);
 
-        $containing = Containing::find($id);
+        $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
+
+        $containing = Containing::where('id', $id)->where('firestation_id', $admin->firestation_id)->first();
 
         $containing->update([
             'name' => $request->name,
@@ -90,8 +97,16 @@ class ContainingsController extends Controller
         return redirect()->back()->withSuccess("Contenants modifié !");
     }
 
-    public function destroy($id){
-        $containing = Containing::destroy($id);
+    public function destroy(Request $request, $id){
+        $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
+
+        $containing = Containing::where('id', $id)->where('firestation_id', $admin->firestation_id)->first();
+
+        $containing->items()->detach();
+        $containing->delete();
         return redirect()->route('admin.containings.index');
     }
 }

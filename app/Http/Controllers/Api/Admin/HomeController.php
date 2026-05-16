@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Site\Controller;
 use App\Models\Containing;
 use App\Models\Item;
 use App\Models\Movement;

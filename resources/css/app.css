@@ -61,7 +61,7 @@
     .return-inter-page{
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 100px); /* 70px = hauteur de la nav */
+        height: calc(100vh - 120px); /* 70px = hauteur de la nav */
         padding: 15px;
         box-sizing: border-box;
         overflow: hidden;
@@ -119,7 +119,7 @@
         justify-content: space-around;
         align-items: center;
         background: #b00020;
-        padding: 5px;
+        padding: 8px;
 
         overflow: hidden;
         position: fixed;
@@ -167,6 +167,7 @@
 
     .footer_menu .link_list div a svg{
         width:20px;
+        height: 20px;
     }
 
     .btn {

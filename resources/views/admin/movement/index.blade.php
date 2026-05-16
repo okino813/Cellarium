@@ -9,7 +9,7 @@
             @forelse($movements as $movement)
                 <div class="card">
                     <div class="row">
-                        <p>{{ $movement->firstname }}</p>
+                        <p>{{ $movement->user->firstname }} {{ $movement->user->lastname }}</p>
                         <p class="date">{{ $movement->created_at->format('d/m/Y') }}
                             {{ $movement->created_at->format('H:i') }}</p>
                     </div>
@@ -51,4 +51,6 @@
             @endforelse
         </div>
     </div>
+    <br>
+    <br>
 @endsection
