@@ -9,6 +9,7 @@ use App\Models\Source;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AdminController extends Controller
 {
@@ -40,13 +41,13 @@ class AdminController extends Controller
 
         $lowStockCount = $lowStockItems->count();
 
-        return view('admin.index', compact(
-            'totalItems',
-            'movementsThisMonth',
-            'activeSources',
-            'lowStockItems',
-            'lowStockCount'
-        ));
+        return Inertia::render('Admin/Index', [
+            'totalItems' => $totalItems,
+            'movementsThisMonth' => $movementsThisMonth,
+            'activeSources' => $activeSources,
+            'lowStockItems' => $lowStockItems,
+            'lowStockCount' => $lowStockCount,
+        ]);
     }
 
     public function logout(Request $request){
@@ -55,5 +56,15 @@ class AdminController extends Controller
         $request->session()->forget('email');
         $request->session()->forget('is_admin');
         return redirect('/');
+    }
+
+    public function changemode(Request $request){
+
+        $currentMode = $request->session()->get('mode', 'user');
+        $newMode = $currentMode === 'admin' ? 'user' : 'admin';
+        $request->session()->put('mode', $newMode);
+
+        // Redirige vers la bonne page selon le nouveau mode
+        return redirect($newMode === 'admin' ? '/admin' : '/');
     }
 }

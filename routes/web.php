@@ -30,6 +30,9 @@ Route::middleware([isLogin::class])->group(function (){
     Route::get('/logout', [LoginController::class, 'logout'])->name("logout");
 });
 
+Route::get('/change-mode', [AdminController::class, 'changeMode'])
+    ->name('changeMode');
+
 Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin', [AdminController::class, 'index'])->name("admin.index");
     Route::post('/admin/logout', [LoginController::class, 'logoutAdmin'])->name("admin.logout");

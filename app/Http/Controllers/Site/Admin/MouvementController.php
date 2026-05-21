@@ -7,6 +7,7 @@ use App\Models\Firestation;
 use App\Models\Movement;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class MouvementController extends Controller
 {
@@ -21,9 +22,10 @@ class MouvementController extends Controller
             ->whereHas('user', function ($query) use ($caserne) {
                 $query->where('firestation_id', $caserne->id);
             })
+            ->with('items')
             ->get()
-            ->sortByDesc('created_at');
+            ->sortByDesc('created_at')->values();
 
-        return view('admin.movement.index', compact('movements'));
+        return Inertia::render('Admin/Movements/Index', compact('movements'));
     }
 }

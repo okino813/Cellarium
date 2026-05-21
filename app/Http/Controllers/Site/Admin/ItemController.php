@@ -9,6 +9,8 @@ use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+
 
 class ItemController extends Controller
 {
@@ -18,13 +20,13 @@ class ItemController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
-        $items = Item::where("firestation_id", $caserne->id)->get()->sortBy("name");
+        $items = Item::where("firestation_id", $caserne->id)->get()->sortBy("name")->values();
 
-        return view('admin.items.index', compact('items'));
+        return Inertia::render('Admin/Items/Index', compact('items'));
     }
 
     public function create(){
-        return view('admin.items.create');
+        return Inertia::render('Admin/Items/Create');
     }
 
     public function store(Request $request){
@@ -74,7 +76,7 @@ class ItemController extends Controller
 
         $item = Item::with('containings')->where("firestation_id", $caserne->id)->where('id',$id)->first();
 
-        return view('admin.items.edit', compact('item'));
+        return Inertia::render('Admin/Items/Edit', compact('item'));
     }
 
     public function update(Request $request, $id){

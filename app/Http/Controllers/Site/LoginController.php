@@ -75,6 +75,10 @@ class LoginController extends Controller
                         $request->session()->put('code', $request->code);
                         $request->session()->put('isAdmin', true);
                         $request->session()->put('matricule', $request->matricule);
+                        $request->session()->put('mode', "admin");
+                        if($admin->isAdminChief){
+                            $request->session()->put('isAdminChief', true);
+                        }
                         return redirect()->route('admin.index');
                     }
                 }

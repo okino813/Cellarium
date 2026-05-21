@@ -79,7 +79,8 @@
             </div>
 
 
-            <!-- Est stocké -->
+            <!-- Est admin -->
+            @if(session()->has('isAdminChief') and session('isAdminChief') == true)
             <div class="card form-item" >
                 <div class="field">
                     <label for="isAdmin" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
@@ -109,6 +110,8 @@
                 </div>
 
             </div>
+            @endif
+
 
             <!-- Boutons -->
             <button

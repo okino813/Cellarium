@@ -85,6 +85,7 @@
                 >
             </div>
             <!-- Est Admin ? -->
+            @if(session()->has('isAdminChief') and session('isAdminChief') == true)
             <div class="card form-item" >
                 <div class="field">
                     <label for="isAdmin" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
@@ -115,6 +116,8 @@
                     <small style="color: #7f8c8d; font-size: 13px;">Laissez le chanps vide pour ne mas modifé le mot de passe</small>
                 </div>
             </div>
+
+            @endif
 
             <a class="btn-delete"
                href="{{ route('admin.user.delete', $user->id) }}"
