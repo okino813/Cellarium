@@ -10,7 +10,6 @@ use App\Http\Controllers\Site\AdminController;
 use App\Http\Controllers\Site\Front\InterController;
 use App\Http\Controllers\Site\Front\VerifController;
 use App\Http\Controllers\Site\LoginController;
-use App\Http\Controllers\TestController;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isLogin;
 use Illuminate\Support\Facades\Route;

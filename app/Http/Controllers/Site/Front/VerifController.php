@@ -11,6 +11,7 @@ use App\Models\Source;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\MailGunService;
+use Inertia\Inertia;
 
 class VerifController extends Controller
 {
@@ -19,6 +20,7 @@ class VerifController extends Controller
     ){
         $this->mailgunService = $mailgunService;
     }
+    
     public function index(Request $request){
 
         $matricule = $request->session()->get("matricule");
@@ -26,9 +28,16 @@ class VerifController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
+        // dd($request->sucess);
+        if($request->success){
+            dd("pAse");
+        }
+
         $sources = Source::where("firestation_id", $user->firestation_id)->where("firestation_id", $user->firestation_id)->get();
 
-        return view('front.verif.index', compact('sources'));
+        return Inertia::render('Front/verif/Index', [
+            'sources' => $sources,
+        ]);
 
     }
 
@@ -43,7 +52,10 @@ class VerifController extends Controller
 
         $source = Source::where("firestation_id", $user->firestation_id)->where("id", $id)->first();
 
-        return view('front.verif.show', compact('contenants', 'source'));
+        return Inertia::render('Front/verif/Show', [
+            'contenants' => $contenants,
+            'source' => $source
+        ]);
     }
 
     public function updateQty(Request $request, $id){
