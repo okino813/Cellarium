@@ -33,6 +33,8 @@ class ItemController extends Controller
         // On vérifie les données
         $request->validate([
             'name' => 'required|string',
+            'is_stock' => 'required|boolean',
+            'state' => 'required|boolean',
         ]);
 
         $matricule = $request->session()->get("matricule");
@@ -46,13 +48,13 @@ class ItemController extends Controller
         $seuil = 0;
 
         if($request->has('is_stock')){
-            $is_stock = 1;
+            $is_stock = $request->is_stock;
             $total_qty = $request->total_qty;
             $seuil = $request->seuil;
         }
 
         if($request->has('state')){
-            $state = 1;
+            $state = $request->state;
         }
 
         $item = Item::create([
@@ -82,7 +84,10 @@ class ItemController extends Controller
     public function update(Request $request, $id){
         $request->validate([
             'name' => 'required|string',
+            'is_stock' => 'required|boolean',
+            'state' => 'required|boolean'
         ]);
+
 
         $matricule = $request->session()->get("matricule");
         $code = $request->session()->get("code");
@@ -97,13 +102,13 @@ class ItemController extends Controller
         $seuil = 0;
 
         if($request->has('is_stock')){
-            $is_stock = 1;
+            $is_stock = $request->is_stock;
             $total_qty = $request->total_qty;
             $seuil = $request->seuil;
         }
 
         if($request->has('state')){
-            $state = 1;
+            $state = $request->state;
         }
 
         $item->update([

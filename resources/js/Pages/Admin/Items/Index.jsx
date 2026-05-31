@@ -16,7 +16,13 @@ export default function Index({ items }) {
                     <Link key={item.id} className="card" href={`/admin/items/edit/${item.id}`}>
                         <div className="name-seuil">
                             <p>{item.name}</p>
-                            {item.is_stock && <p className="seuil">Seuil : {item.seuil}</p>}
+                            
+                            {item.is_stock ? ( 
+                            <p className="seuil">Seuil : {item.seuil}</p>
+                            ):(
+                                // Rien
+                                <span></span>
+                            )}
                         </div>
                         <div className="qty-status">
                             <div className="qty">
@@ -27,10 +33,13 @@ export default function Index({ items }) {
                                         {item.total_qty}
                                     </span>
                                 )}
-                                {item.is_stock && (
+                                {item.is_stock ? (
                                     item.total_qty <= item.seuil
                                         ? <div className="background-rupture"><p>Rupture</p></div>
                                         : <div className="background-ok"><p>Ok</p></div>
+                                ) : (
+                                    // Rien
+                                    <span></span>
                                 )}
                             </div>
                         </div>

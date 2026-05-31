@@ -1,5 +1,5 @@
 import AppLayout from '@/Layouts/AppLayout'
-import { useForm } from '@inertiajs/react'
+import { useForm, router } from '@inertiajs/react'
 import { useState } from 'react'
 
 export default function Create() {
@@ -13,7 +13,18 @@ export default function Create() {
 
     function submit(e) {
         e.preventDefault()
-        post('/admin/items')
+        console.log(data.is_stock)
+        const formData = { 
+            name: data.name,
+            is_stock: data.is_stock,
+            state: data.state,
+            total_qty: data.total_qty,
+            seuil: data.seuil
+         }
+
+         console.log(formData)
+
+        router.post('/admin/items/store', formData)
     }
 
     return (
