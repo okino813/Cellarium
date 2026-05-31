@@ -1,11 +1,12 @@
 import AppLayout from '@/Layouts/AppLayout'
-import { useForm } from '@inertiajs/react'
+import { useForm, router} from '@inertiajs/react'
 import { useState } from 'react'
 
 export default function ReturnInter({ items }) {
     const [quantities, setQuantities] = useState({})
     const [search, setSearch] = useState('')
     const { data, setData, post, processing } = useForm({ comment: '' })
+    const [showAlert, setShowAlert] = useState(false); 
 
     function changeQuantity(itemId, delta) {
         setQuantities(prev => ({
@@ -24,13 +25,30 @@ export default function ReturnInter({ items }) {
         items.forEach(item => {
             formData[`id${item.id}`] = quantities[item.id] || 0
         })
-        post('/return-inter/validate', { data: formData })
+
+        console.log(formData)
+        router.post('/return-inter/validate', formData)
+        setShowAlert(true);
     }
+
+     const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
 
     return (
         <div className="return-inter-page page">
             <h1 className="title-user">Retours d'intervention</h1>
             <p className="instruction">Renseignez les éléments pris dans la réserve</p>
+
+            {showAlert && (
+                <div className="alertDialog">
+                    <div className="content">
+                        <h2>Modification du stock éffectué !</h2>
+                        <button onClick={handleCloseAlert}>Compris</button>
+                    </div>
+                </div>
+            )}
+          
 
             <div className="search-container">
                 <label>Rechercher un item</label>
