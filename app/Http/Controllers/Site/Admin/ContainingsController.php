@@ -30,10 +30,9 @@ class ContainingsController extends Controller
         $code = $request->session()->get("code");
         $caserne = Firestation::where('code', $code)->first();
         $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
-
         $sources = Source::where('firestation_id', $admin->firestation_id)->get();
 
-        return view('admin.containings.create', compact('sources'));
+        return Inertia::render('Admin/Containings/Create', compact('sources'));
     }
 
     public function store(Request $request){
@@ -72,8 +71,6 @@ class ContainingsController extends Controller
 
         $items = Item::where('firestation_id', $admin->firestation_id)->get();
 
-
-        // return view('admin.containings.edit', compact('contenant', 'sources', 'items'));
         return Inertia::render('Admin/Containings/Edit', compact('contenant', 'sources', 'items'));
 
     }
