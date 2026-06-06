@@ -83,7 +83,6 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/users/delete/{id}', [AdminUserController::class, 'destroy'])->name("admin.user.delete");
 
     Route::get('/admin/mouvement/index', [AdminMouvementController::class, 'index'])->name("admin.movement.index");
-
 });
 
 // Routes publiques (accessibles sans session)

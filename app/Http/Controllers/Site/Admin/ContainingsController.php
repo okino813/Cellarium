@@ -9,6 +9,7 @@ use App\Models\Item;
 use App\Models\Source;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ContainingsController extends Controller
 {
@@ -18,10 +19,9 @@ class ContainingsController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
-
         $containings = Containing::with("source")->where('firestation_id', $admin->firestation_id)->get();
 
-        return view('admin.containings.index', compact('containings'));
+        return Inertia::render('Admin/Containings/Index', compact('containings'));
     }
 
     public function create(Request $request){
@@ -73,7 +73,9 @@ class ContainingsController extends Controller
         $items = Item::where('firestation_id', $admin->firestation_id)->get();
 
 
-        return view('admin.containings.edit', compact('contenant', 'sources', 'items'));
+        // return view('admin.containings.edit', compact('contenant', 'sources', 'items'));
+        return Inertia::render('Admin/Containings/Edit', compact('contenant', 'sources', 'items'));
+
     }
 
     public function update(Request $request, $id){
@@ -94,7 +96,7 @@ class ContainingsController extends Controller
             'source_id' => $request->source_id
         ]);
 
-        return redirect()->back()->withSuccess("Contenants modifié !");
+        return redirect()->route("admin.containings.index");
     }
 
     public function destroy(Request $request, $id){

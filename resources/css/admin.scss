@@ -1,18 +1,204 @@
-@media(max-width: 1000px) {
-/*    Ici le contenu du tel*/
-    .admin-page{
-        display: flex;
-        flex-direction: column;
-        height: calc(100vh);
-        padding: 15px;
-    }
+.app-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    
+    .app-content {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        
+        .admin-page{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 70px;
+            // height: calc(100vh);
+            padding: 15px;
+            
+            
+            .title-user{
+                font-size: 24px;
+                color: #2c3e50;
+                margin-bottom: 0px;
+                text-align: left;
+            }
+            
+            .instruction{
+                font-size: 15px;
+                margin-bottom: 8px;
+            }
+            
+            .list-containing-admin{
+                display: flex;
+                flex-direction: column;
+                height: calc(100vh - 120px); /* 70px = hauteur de la nav */
+                padding: 15px;
+                box-sizing: border-box;
+                overflow: hidden;
+                gap: 5px;
+                
+                .card{
+                    text-decoration: none;
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    color: black;
+                }
+        
+            }
+            
+            .list-item-admin, .list-item-rupture{
+                display: flex;
+                flex-direction: column;
+                gap:5px;
+                padding-bottom: 70px;
+                
+                .card{
+                    display: flex;
+                    color: black;
+                    text-decoration: none;
+                    justify-content: space-between;
+                    padding: 10px;
+                    .name-seuil{
+                        text-align: left;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                    }
+                    
+                    .qty-status{
+                        text-align: right;
+                        .qty{
+                            font-weight: bold;
+                            .background{
+                                background: #D2CED5;
+                                border-radius: 10px;
+                                font-size: 10px;
+                                padding: 5px;
+                                color: black;
+                                text-align: center;
+                                
+                                .print{
+                                    font-size: 15px;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .list-movement{
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                
+                .card{ 
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding:10px;
+                    gap: 6px;
+                    
+                    .list-item{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                        width: 100%;
+                        
+                        .item{
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            flex-direction: row;
+                            width: 100%;
+                            
+                        }
+                    }
+                    
+                    .comment{
+                        width:100%;
+                    }
 
+
+                    .row{
+                        display: flex;
+                        width: 100%;
+                        justify-content: space-between;
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+label{
+     margin-bottom: 8;
+     font-weight: 600;
+     color: '#2c3e50';
+}
+
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.instructions-box {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.instructions-text {
+    font-size: 10px;
+    color: #856404;
+    margin: 0;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* Hide number input arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+
+@media(max-width: 1000px) {
+    /*    Ici le contenu du tel*/
+    
+    
     .field{
         display: flex;
         justify-content: space-between;
         margin-bottom: 5px;
     }
-
+    
     .btn-add{
         position: fixed;
         height: 50px;
@@ -26,95 +212,53 @@
         fill: #b00020;
         border-radius: 10px;
     }
-
+    
     .btn-add svg{
         scale: 0.5;
     }
-
-
-    .list-item-admin{
-        display: flex;
-        flex-direction: column;
-        gap:5px;
-        padding-bottom: 70px;
-    }
-
-    .list-contain-admin{
-        display: flex;
-        flex-direction: column;
-        gap:5px;
-        padding-bottom: 70px;
-        text-decoration: none;
-    }
-
-    .list-contain-admin .card{
-        text-decoration: none;
-        padding: 5px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .list-contain-admin .source{
-        text-decoration: none;
-        padding: 10px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-
-
-    .list-contain-admin .card .text{
-        display: flex;
-        flex-direction: column;
-        color: black;
-    }
-
-    .list-contain-admin .card .name{
-        font-size: 15px;
-    }
-
+    
+    
+    
     .list-item-contain{
         padding:5px !important;
     }
-
+    
     .list-item-contain .item{
         display: flex;
         justify-content: space-between;
         margin: 5px;
     }
-
+    
     .list-item-contain .item .qty-value{
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
     }
-
+    
     .list-item-contain .item .qty-value .left{
         border-top-left-radius: 20px 20px;
         border-bottom-left-radius: 20px 20px;
         border:  2px solid #000000;
         border-right: 0px;
     }
-
+    
     .list-item-contain .item .qty-value .right{
         border-top-right-radius: 20px 20px;
         border-bottom-right-radius: 20px 20px;
         border:  2px solid #000000;
         border-left: 0px;
-
-
+        
+        
     }
-
+    
     .list-item-contain .item .qty-value button{
         width: 40px;
         height: 40px;
         background: #F4DDDD;
         font-size: 20px;
     }
-
+    
     .list-item-contain .item .qty-value input{
         width: 40px;
         height: 40px;
@@ -122,19 +266,19 @@
         border:  2px solid #000000;
         border-left: 0px;
         border-right: 0px;
-
+        
     }
-
+    
     .list-contain-admin .card .source{
         font-size: 10px;
     }
-
+    
     .form-item, .stock_fields{
         width: 100%;
         padding: 10px !important;
         margin-bottom: 10px;
     }
-
+    
     .btn-delete{
         display: flex;
         justify-content: center;
@@ -150,12 +294,12 @@
         font-weight: bold;
         transition: background 0.3s;
     }
-
+    
     .btn-delete svg{
         fill: white;
         scale: 0.5;
     }
-
+    
     .btn-save{
         display: flex;
         justify-content: center;
@@ -172,7 +316,7 @@
         margin-top: 10px;
         margin-bottom: 40px;
     }
-
+    
     /* The switch - the box around the slider */
     .switch {
         position: relative;
@@ -180,14 +324,14 @@
         width: 50px;
         height: 24px;
     }
-
+    
     /* Hide default HTML checkbox */
     .switch input {
         opacity: 0;
         width: 0;
         height: 0;
     }
-
+    
     /* The slider */
     .slider {
         position: absolute;
@@ -200,7 +344,7 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
+    
     .slider:before {
         position: absolute;
         content: "";
@@ -212,67 +356,32 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
+    
     input:checked + .slider {
         background-color: #b00020;
     }
-
+    
     input:focus + .slider {
         box-shadow: 0 0 1px #b00020;
     }
-
+    
     input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
-
+    
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
     }
-
+    
     .slider.round:before {
         border-radius: 50%;
     }
-
-    .list-item-admin .card{
-        display: flex;
-        color: black;
-        text-decoration: none;
-        justify-content: space-between;
-        padding: 10px;
-    }
-
-    .list-item-admin .card .name-seuil{
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .list-item-admin .card .qty-status{
-        text-align: right;
-    }
-    .list-item-admin .card .qty-status .qty{
-        font-weight: bold;
-    }
-
-
-    .list-item-admin .card .qty-status .qty .background{
-        background: #D2CED5;
-        border-radius: 10px;
-        font-size: 10px;
-        padding: 5px;
-        color: black;
-        text-align: center;
-    }
-
-    .list-item-admin .card .qty-status .qty .background .print{
-        font-size: 15px;
-        font-weight: bold;
-    }
-
+    
+    
+    
     .background-rupture{
         background: #F9DEDC;
         color: #b00020;
@@ -291,11 +400,11 @@
         text-align: center;
         border-radius: 10px;
         font-size: 10px;
-
+        
     }
-
-
-
+    
+    
+    
     .card-stat-list{
         display: flex;
         gap: 20px;
@@ -303,27 +412,7 @@
         margin-top: 10px;
         overflow-x: scroll;
     }
-
-    .list-item-rupture{
-        display: flex;
-        flex-direction: column;
-    }
-
-    .list-item-rupture .card{
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        text-decoration: none;
-        margin-bottom: 5px;
-    }
-    .list-item-rupture .card .name{
-        color: black;
-    }
-
-    .list-item-rupture .card .stock{
-        margin-right: 20px;
-    }
-
+    
     .card-stat-list .card{
         text-align: center;
         width: auto;
@@ -336,22 +425,22 @@
         padding: 20px;
         justify-content: center;
     }
-
+    
     .card-stat-list .card h3{
         font-size: 16px;
     }
-
+    
     .card-stat-list .card p{
         font-size: 20px;
         font-weight: bold;
     }
-
+    
 }
 @media(min-width: 1000px) {
     .content-mobile{
         display: none;
     }
-
+    
     .content-ordi{
         display: block;
     }
