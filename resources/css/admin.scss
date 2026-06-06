@@ -13,7 +13,6 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 70px;
-            // height: calc(100vh);
             padding: 15px;
             
             
@@ -33,7 +32,6 @@
                 display: flex;
                 flex-direction: column;
                 height: calc(100vh - 120px); /* 70px = hauteur de la nav */
-                padding: 15px;
                 box-sizing: border-box;
                 overflow: hidden;
                 gap: 5px;

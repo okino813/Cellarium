@@ -49,7 +49,7 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/sources/create', [AdminsourceController::class, 'create'])->name("admin.sources.create");
     Route::post('/admin/sources/store', [AdminsourceController::class, 'store'])->name("admin.sources.store");
     Route::get('/admin/sources/edit/{id}', [AdminsourceController::class, 'edit'])->name("admin.sources.edit");
-    Route::post('/admin/sources/update/{id}', [AdminsourceController::class, 'update'])->name("admin.sources.update");
+    Route::put('/admin/sources/update/{id}', [AdminsourceController::class, 'update'])->name("admin.sources.update");
     Route::get('/admin/sources/delete/{id}', [AdminsourceController::class, 'destroy'])->name("admin.sources.delete");
 
     // Crud Contenant

@@ -7,6 +7,7 @@ use App\Models\Firestation;
 use App\Models\Source;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SourceController extends Controller
 {
@@ -18,11 +19,11 @@ class SourceController extends Controller
 
         $sources = Source::where('firestation_id', $caserne->id)->get();
 
-        return view('admin.sources.index', compact('sources'));
+        return Inertia::render('Admin/Sources/Index', compact('sources'));
     }
 
     public function create(){
-        return view('admin.sources.create');
+        return Inertia::render('Admin/Sources/Create');
     }
 
     public function store(Request $request){
@@ -49,10 +50,9 @@ class SourceController extends Controller
         $code = $request->session()->get("code");
         $caserne = Firestation::where('code', $code)->first();
         $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
-
         $source = Source::where('id',$id)->where('firestation_id', $caserne->id)->first();
 
-        return view('admin.sources.edit', compact('source'));
+        return Inertia::render('Admin/Sources/Edit', compact('source'));
     }
 
     public function update(Request $request, $id){
@@ -64,7 +64,6 @@ class SourceController extends Controller
         $code = $request->session()->get("code");
         $caserne = Firestation::where('code', $code)->first();
         $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
-
         $source = Source::where('id',$id)->where('firestation_id', $caserne->id)->first();
 
         $source->update([
