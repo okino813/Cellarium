@@ -7,6 +7,7 @@ use App\Models\Firestation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -16,13 +17,25 @@ class UserController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
-        $users = User::where("firestation_id", $caserne->id)->get()->sortBy("lastname");
+        $users = User::where("firestation_id", $caserne->id)->get()->sortBy("lastname")->toArray();
 
-        return view('admin.users.index', compact('users'));
+        return Inertia::render('Admin/Users/Index', compact('users'));
     }
 
-    public function create(){
-        return view('admin.users.create');
+    public function create(Request $request){
+        $matricule = $request->session()->get("matricule");
+        $code = $request->session()->get("code");
+        $caserne = Firestation::where('code', $code)->first();
+        $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
+
+        if($admin){
+            $perm = $admin->isAdminChief;
+
+            return Inertia::render('Admin/Users/Create', compact('perm'));
+        }
+        else{
+            return redirect()->route('/login')->with('error', 'Vous n\'avez pas accès à cette ressource');
+        }
     }
 
     public function store(Request $request){
@@ -30,7 +43,6 @@ class UserController extends Controller
         $request->validate([
             'firstname' => 'required|string',
             'lastname' => 'required|string',
-            'email' => 'required|string',
             'matricule' => 'required|string',
         ]);
 
@@ -41,21 +53,35 @@ class UserController extends Controller
 
         $passwordHash = null;
         $isAdmin = false;
+        $email = null;
 
         if($admin and $admin->isAdmin){
             if($request->isAdmin){
+                $email = $request->email;
                 $password = $request->password;
                 $passwordHash = Hash::make($password);
                 $isAdmin = true;
             }
 
+
+            if($admin->isAdminChief){
+                if(isset($request->isAdminChief)){
+                    $adminChief = $request->isAdminChief;
+                }else{
+                    $adminChief = false;
+                }
+            }
+            else{
+                $adminChief = false;
+            }
+
             $user = User::create([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
-                'email' => $request->email,
+                'email' => $email,
                 'matricule' => $request->matricule,
                 'isAdmin' => $isAdmin,
-                'isAdminChief' => false,
+                'isAdminChief' => $adminChief,
                 'password' => $passwordHash,
                 'firestation_id' => $caserne->id,
             ]);
@@ -77,7 +103,9 @@ class UserController extends Controller
         $user = User::where("firestation_id", $caserne->id)->findOrFail($id);
 
         if($admin and ($admin->firestation_id == $user->firestation_id)){
-            return view('admin.users.edit', compact('user'));
+            $perm = $admin->isAdminChief;
+
+            return Inertia::render('Admin/Users/Edit', compact('user', 'perm'));
         }
         else{
             return redirect()->route('/login')->with('error', 'Vous n\'avez pas accès à cette ressource');
@@ -89,7 +117,6 @@ class UserController extends Controller
         $request->validate([
             'firstname' => 'required|string',
             'lastname'  => 'required|string',
-            'email'     => 'required|string',
             'matricule' => 'required|string',
         ]);
 
@@ -105,13 +132,24 @@ class UserController extends Controller
         // Met à jour l'utilisateur
         $user = User::where("firestation_id", $caserne->id)->findOrFail($id);
 
+        if($admin->isAdminChief){
+            if(isset($request->isAdminChief)){
+                $adminChief = $request->isAdminChief;
+            }else{
+                $adminChief = false;
+            }
+        }
+        else{
+            $adminChief = $user->isAdminChief;
+        }
+
         $user->update([
             'firstname'   => $request->firstname,
             'lastname'    => $request->lastname,
             'email'       => $request->email,
             'matricule'   => $request->matricule,
             'isAdmin'     => $request->boolean('isAdmin'),
-            'isAdminChief'=> false,
+            'isAdminChief'=> $adminChief,
             'password'    => $request->filled('password')
                 ? Hash::make($request->password)
                 : $user->password,
