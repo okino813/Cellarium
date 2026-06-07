@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin - Cellarium</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
+@extends('layout.login')
+
+@section('content')
 <div class="container">
     <div class="card" style="max-width: 500px; margin: 0px auto; padding:20px;">
         <div style="text-align: center; margin-bottom: 30px;">
@@ -40,7 +34,7 @@
                     Code caserne :
                 </label>
                 <input
-                    type="text"
+                    type="number"
                     name="code"
                     id="code"
                     class="input-field"
@@ -55,12 +49,12 @@
                     Matricule :
                 </label>
                 <input
-                    type="text"
+                    type="number"
                     id="matricule"
                     name="matricule"
                     class="input-field"
                     value="{{ old('matricule') }}"
-                    placeholder="123456"
+                    placeholder="Ex: 123456"
                     required
                 >
             </div>
@@ -79,17 +73,15 @@
                 >
             </div>
 
-            <button type="submit" class="btn" style="width: 100%; margin-top: 30px; background-color: #2c3e50;">
+            <button type="submit" class="btn btn-login" >
                 Se connecter
             </button>
         </form>
 
-        <div style="text-align: center; margin-top: 20px;">
+        <div style="margin-top: 20px;">
             <a href="/" style="color: #7f8c8d; text-decoration: underline; font-size: 14px;">
                 ← Retour à l'accueil
             </a>
         </div>
     </div>
-</div>
-</body>
-</html>
+@endsection

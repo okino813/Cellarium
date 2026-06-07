@@ -20,7 +20,7 @@
         .app-shell {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: calc(100vh - 60px);
             overflow: hidden;
             
             // Top bar
@@ -65,8 +65,9 @@
                 .return-inter-page{
                     display: flex;
                     flex-direction: column;
-                    height: calc(100vh - 120px); /* 70px = hauteur de la nav */
+                    height: calc(100vh - 150px);
                     padding: 15px;
+                    padding-bottom: 50px;
                     box-sizing: border-box;
                     overflow: hidden;
 
@@ -290,8 +291,11 @@
                 .index-source-page{
                     display: flex;
                     flex-direction: column;
-                    height: calc(100vh - 120px); /* 70px = hauteur de la nav */
-                    padding: 15px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    padding-bottom: 15px;
+                    height: calc(100vh - 150px);
+                    padding-bottom: 50px;
                     box-sizing: border-box;
                     overflow: hidden;
                     
@@ -444,7 +448,15 @@
 
 
 
-
+.btn-login{
+    width: 100%;
+    border-radius: 10px;
+    background-color: #007bff;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border: 0px;
+}
 
 
 

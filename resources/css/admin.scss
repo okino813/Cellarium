@@ -35,6 +35,7 @@
                 box-sizing: border-box;
                 overflow: hidden;
                 gap: 5px;
+                padding-bottom: 20px;
                 
                 .card{
                     text-decoration: none;
@@ -133,11 +134,21 @@
     }
 }
 
+.nav-links{
+    div{
+        a{
+            text-decoration: none;
+            color: black;
+
+        }
+    }
+}
+
 hr{
     border: none;
     height: 1px;
     background-color: #ccc;
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 

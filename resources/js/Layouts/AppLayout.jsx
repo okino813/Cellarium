@@ -21,6 +21,8 @@ function TopBar() {
 
                 <div className={`overlay-action-user ${overlayOpen ? 'visible' : ''}`}>
                     {(session.isAdmin || session.isAdminChief) && (
+
+                        <div>
                         <a href="/change-mode" onClick={(e) => {
                             e.preventDefault()
                             setOverlayOpen(false)
@@ -28,11 +30,10 @@ function TopBar() {
                         }}>
                             {session.mode === 'user' ? 'Passer en mode Admin' : 'Passer en mode Utili.'}
                         </a>
+                        <hr />
+                        </div>
                     )}
-                    <a href="#" onClick={(e) => {
-                        e.preventDefault()
-                        router.visit('/logout', { preserveState: false })
-                    }}>Déconnexion</a>
+                    <a href="/logout">Déconnexion</a>
                 </div>
                 </div>
         </div>

@@ -2,7 +2,7 @@
     "name": "Cellarium",
     "short_name": "CLM",
     "background_color": "#FFFFFF",
-    "display": "fullscreen",
+    "display": "standalone", 
     "description": "Une application de gestion de stock",
     "theme_color": "#b00020",
     "start_url": "/",

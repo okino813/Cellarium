@@ -30,7 +30,7 @@
                         Code caserne :
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="code"
                         name="code"
                         class="input-field"
@@ -45,7 +45,7 @@
                         Matricule :
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="matricule"
                         name="matricule"
                         class="input-field"
@@ -55,7 +55,7 @@
                     >
                 </div>
 
-                <button type="submit" class="btn" style="width: 100%; margin-top: 30px;">
+                <button type="submit" class="btn btn-login">
                     Se connecter
                 </button>
             </form>
