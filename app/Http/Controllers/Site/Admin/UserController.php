@@ -84,13 +84,12 @@ class UserController extends Controller
                 'isAdminChief' => $adminChief,
                 'password' => $passwordHash,
                 'firestation_id' => $caserne->id,
+                'accept_rgpd' => true
             ]);
         }
-
         else{
             return redirect('/admin/users/create')->with('error', 'Echec de la création de l\'utilisateur');
         }
-
         return redirect()->route('admin.user.index');
     }
 
@@ -100,12 +99,14 @@ class UserController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $admin = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
+        $currentId = $admin->id;
+
         $user = User::where("firestation_id", $caserne->id)->findOrFail($id);
 
         if($admin and ($admin->firestation_id == $user->firestation_id)){
             $perm = $admin->isAdminChief;
 
-            return Inertia::render('Admin/Users/Edit', compact('user', 'perm'));
+            return Inertia::render('Admin/Users/Edit', compact('user', 'perm','currentId'));
         }
         else{
             return redirect()->route('/login')->with('error', 'Vous n\'avez pas accès à cette ressource');

@@ -1,7 +1,7 @@
 import AppLayout from '@/Layouts/AppLayout'
 import { useForm, Link, router } from '@inertiajs/react'
 
-export default function Edit({ user, perm }) {
+export default function Edit({ user, perm, currentId }) {
     const { data, setData, put, errors } = useForm({
         firstname: user.firstname,
         lastname: user.lastname,
@@ -33,7 +33,7 @@ export default function Edit({ user, perm }) {
     return (
         <div className="admin-page">
             <h1 className="title-user">Modifier l'utilisateur</h1>
-            <p className="instruction">Modifiez les informations de <strong>{user.name}</strong></p>
+            <p className="instruction">Modifiez les informations de <strong>{user.firstname}</strong></p>
 
             {errors && Object.keys(errors).length > 0 && (
                 <div className="alert-error" style={{ marginBottom: 20 }}>
@@ -64,6 +64,17 @@ export default function Edit({ user, perm }) {
                     </label>
                     <input type="text" className="input-field" placeholder="489247"
                            value={data.matricule} onChange={e => setData('matricule', e.target.value)} required />
+                    {(data.isAdmin == 1 && perm != 1 && currentId == user.id) && (
+                        <div>
+                            <label>
+                                Mot de passe
+                            </label>
+                            <p className="instruction-label">Remplissez ce champs si modification</p>
+                            <input type="password" className="input-field" placeholder="Mot de passe"
+                                value={data.password} onChange={e => setData('password', e.target.value)} />
+                        </div>
+                    )}
+
                 </div>
                 {perm == 1 && (
                     <div className="card form-item">
