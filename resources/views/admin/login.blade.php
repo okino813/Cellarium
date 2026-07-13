@@ -79,9 +79,12 @@
         </form>
 
         <div style="margin-top: 20px;">
-            <a href="/" style="color: #7f8c8d; text-decoration: underline; font-size: 14px;">
-                ← Retour à l'accueil
-            </a>
+           @if(old('code', $code))
+            <a href="{{route("front.login.code", $code)}}">Utilisateur ? Cliquez ici</a>
+        @else
+            <a href="{{route("front.login")}}">Utilisateur ? Cliquez ici</a>
+        @endif
+        
         </div>
     </div>
 @endsection

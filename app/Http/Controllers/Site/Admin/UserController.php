@@ -136,6 +136,7 @@ class UserController extends Controller
         if($admin->isAdminChief){
             if(isset($request->isAdminChief)){
                 $adminChief = $request->isAdminChief;
+                $admin = $request->isAdmin;
             }else{
                 $adminChief = false;
             }

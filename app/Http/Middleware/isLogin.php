@@ -23,10 +23,12 @@ class isLogin
             return $next($request);
         }
 
+
         // Vérifie si la session contient les bonnes informations
         if ($request->hasSession()) {
            //  On récupère le code du firestation de session
             try {
+                
             $matricule = $request->session()->get('matricule');
             $code = $request->session()->get('code');
 
@@ -36,6 +38,7 @@ class isLogin
                     $query->where('code', $request->session()->get('code'));
                 })
                 ->first();
+
 
                 if($user){
                     // On ajoute le code dans le return
@@ -51,6 +54,7 @@ class isLogin
                     return $next($request);
                 }
             } catch (\Exception $exception) {
+
                 return redirect('/login');
             }
         }

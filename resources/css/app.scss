@@ -15,13 +15,16 @@
         line-height: 1.6;
         color: #333;
         background-color: #f8f9fa;
+        overflow-x: hidden;
+        overflow-y: hidden;
         
         
         .app-shell {
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 60px);
-            overflow: hidden;
+            height: calc(100dvh);
+            overflow-x: hidden;
+            overflow-y: hidden;
             
             // Top bar
             .nav-container {
@@ -50,7 +53,7 @@
                 
                 .page{
                     .title-user{
-                        font-size: 24px;
+                        font-size: 20px;
                         color: #2c3e50;
                         margin-bottom: 0px;
                         text-align: left;
@@ -65,9 +68,8 @@
                 .return-inter-page{
                     display: flex;
                     flex-direction: column;
-                    height: calc(100vh - 150px);
+                    height: calc(100dvh - 125px);
                     padding: 15px;
-                    padding-bottom: 50px;
                     box-sizing: border-box;
                     overflow: hidden;
 
@@ -177,7 +179,7 @@
                                 max-height: 77px;
                                 
                                 .item-label {
-                                    font-size: 10px;
+                                    font-size: 15px;
                                     color: #2c3e50;
                                     font-weight: 600;
                                     text-align: center;
@@ -294,8 +296,7 @@
                     padding-left: 15px;
                     padding-right: 15px;
                     padding-bottom: 15px;
-                    height: calc(100vh - 150px);
-                    padding-bottom: 50px;
+                    height: calc(100dvh - 125px);
                     box-sizing: border-box;
                     overflow: hidden;
                     

@@ -1,7 +1,7 @@
 .app-shell {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     
     .app-content {
@@ -14,6 +14,83 @@
             flex-direction: column;
             margin-bottom: 70px;
             padding: 15px;
+            
+            .list-item-contain{
+                
+                
+                .div-btn{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    .new-assign{
+                        width: 50%;
+                        text-align: center;
+                    }
+                }
+                
+                #modal-add-item{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    right:0;
+                    left: 0;
+                    background-color: #00000078;
+                    
+                    form{
+                        width: 80%;
+                        display: flex;
+                        flex-direction: column;
+                        padding: 10px;
+                        border-radius: 10px;
+                        background-color: white;
+                        
+                        label{
+                            display: block;
+                            font-weight: 600;
+                            color: #2c3e50; 
+                            margin-top: 5px;
+                            font-size: 14; 
+                        }
+                        
+                        select, input{
+                            width: 100%;
+                            padding: 10px 12px;
+                            margin-top: 5px;
+                            border: 2px solid #e0e0e0;
+                            border-radius: 8;
+                            font-size: 14;
+                            color: #333;
+                            background: white;
+                            cursor: pointer;
+                            outline: none; 
+                        }
+                        
+                        .btns{
+                            display: flex;
+                            gap: 10px;
+                            margin-top: 10px;
+                            
+                            button{
+                                flex: 1; 
+                                padding: 12px;
+                                font-weight: 600;
+                                font-size: 14px;
+                                border-radius: 8px;
+                                border: none;
+                                cursor: pointer;
+                                color: white;
+                            }
+                        }
+                    }
+                    
+                }
+            }
             
             
             .title-user{
@@ -45,7 +122,7 @@
                     justify-content: space-between;
                     color: black;
                 }
-        
+                
             }
             
             .list-item-admin, .list-item-rupture{
@@ -120,8 +197,8 @@
                     .comment{
                         width:100%;
                     }
-
-
+                    
+                    
                     .row{
                         display: flex;
                         width: 100%;
@@ -139,7 +216,7 @@
         a{
             text-decoration: none;
             color: black;
-
+            
         }
     }
 }
@@ -153,9 +230,9 @@ hr{
 
 
 label{
-     margin-bottom: 8;
-     font-weight: 600;
-     color: '#2c3e50';
+    margin-bottom: 8;
+    font-weight: 600;
+    color: '#2c3e50';
 }
 
 

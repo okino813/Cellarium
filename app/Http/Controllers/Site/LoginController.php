@@ -33,12 +33,15 @@ class LoginController extends Controller
         if ($firestation && $request->code === $firestation->code) {
             // Vérifie si le matricule existe en db
             $user = User::where('matricule', $request->matricule)->first();
-            if($user and !$user->isAdmin){
+           
+            if($user and $user->isAdmin == false){
                 // Stocke le code et le prénom en session
                 $request->session()->put('matricule', $user->matricule);
                 $request->session()->put('code', $firestation->code);
+
             }
             else{
+
                 return redirect('/login')->with('error', 'Compte admin, conenctez-vous avec le formulaire adéquate');
             }
 

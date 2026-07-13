@@ -27,10 +27,12 @@ class InterController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
-        $items = Item::where('firestation_id', $user->firestation_id)->get()->sortBy("name")->values();
+
+        $items = Item::where('firestation_id', $user->firestation_id)->where('is_stock', true)->get()->sortBy("name")->values();
+
 
         return Inertia::render('Front/ReturnInter', [
-            'items' => $items,
+            'items' => $items
         ]);
     }
 

@@ -64,7 +64,7 @@ Route::middleware([isAdmin::class])->group(function (){
     Route::get('/admin/attribution/addItemContaining', [AdminAtributionController::class, 'addItemContaining'])->name('admin.attribution.addItemContaining');
     Route::post('/admin/attribution/addItemContaining/validate', [AdminAtributionController::class, 'addItemContainingValidate'])->name('admin.attribution.addItemContaining.validate');
     Route::get('/admin/attribution/addItemContaining/edit/{containing_id}/{item_id}', [AdminAtributionController::class, 'editItemContaining'])->name('admin.attribution.addItemContaining.edit');
-    Route::post('/admin/attribution/addItemContaining/update/{id}', [AdminAtributionController::class, 'ItemContainingUpdate'])->name('admin.attribution.addItemContaining.update');
+    Route::put('/admin/attribution/addItemContaining/update/{id}', [AdminAtributionController::class, 'ItemContainingUpdate'])->name('admin.attribution.addItemContaining.update');
     Route::get('/admin/attribution/addItemContaining/delete/{containing_id}/{item_id}', [AdminAtributionController::class, 'ItemContainingDelete'])->name('admin.attribution.ItemContaining.delete');
 
     // CRUD Containing-Source
@@ -86,9 +86,9 @@ Route::middleware([isAdmin::class])->group(function (){
 });
 
 // Routes publiques (accessibles sans session)
-Route::get('/code/{code}', [LoginController::class, 'index']); // Affiche le formulaire de login avec le code dans l'URL
+Route::get('/code/{code}', [LoginController::class, 'index'])->name('front.login.code'); // Affiche le formulaire de login avec le code dans l'URL
 Route::post('/login', [LoginController::class, 'login'])->name("login.validate"); // Traite le formulaire de login
-Route::get('/login', [LoginController::class, 'index']); // Affiche le formulaire de login sans code
+Route::get('/login', [LoginController::class, 'index'])->name("front.login"); // Affiche le formulaire de login sans code
 
 // Routes back-office (accessibles sans session)
 Route::get('/admin/code/{code}', [LoginController::class, 'indexAdmin'])->name("admin.login.code"); // Affiche le formulaire de login avec le code dans l'URL

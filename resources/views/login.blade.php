@@ -60,7 +60,10 @@
                 </button>
             </form>
         </div>
-
-        <a href="{{route("admin.login")}}">Admin ? Cliquez ici</a>
+        @if(old('code', $code))
+            <a href="{{route("admin.login.code", $code)}}">Admin ? Cliquez ici</a>
+        @else
+            <a href="{{route("admin.login")}}">Admin ? Cliquez ici</a>
+        @endif
     </div>
 @endsection

@@ -6,6 +6,9 @@ function TopBar() {
     const { session } = usePage().props
     const [overlayOpen, setOverlayOpen] = useState(false)
 
+    console.log("Session:", session);
+    console.log("Mode:", session.mode);
+
     return (
         <div className="nav-container">
             <div>
@@ -21,7 +24,6 @@ function TopBar() {
 
                 <div className={`overlay-action-user ${overlayOpen ? 'visible' : ''}`}>
                     {(session.isAdmin || session.isAdminChief) && (
-
                         <div>
                         <a href="/change-mode" onClick={(e) => {
                             e.preventDefault()
@@ -35,7 +37,7 @@ function TopBar() {
                     )}
                     <a href="/logout">Déconnexion</a>
                 </div>
-                </div>
+            </div>
         </div>
     )
 }

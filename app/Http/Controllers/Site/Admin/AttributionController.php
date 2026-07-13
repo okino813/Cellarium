@@ -101,10 +101,7 @@ class AttributionController extends Controller
             $containing->items()->detach($item->id);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Quantité mise à jour avec succès !'
-        ]);
+         return redirect()->back();
     }
 
     public function ItemContainingDelete(Request $request, $containing_id, $item_id)
