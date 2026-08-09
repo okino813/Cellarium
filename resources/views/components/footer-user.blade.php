@@ -55,6 +55,34 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M133.8 36.3c10.9 7.6 13.5 22.6 5.9 33.4l-56 80c-4.1 5.8-10.5 9.5-17.6 10.1S52 158 47 153L7 113C-2.3 103.6-2.3 88.4 7 79S31.6 69.7 41 79l19.8 19.8 39.6-56.6c7.6-10.9 22.6-13.5 33.4-5.9zm0 160c10.9 7.6 13.5 22.6 5.9 33.4l-56 80c-4.1 5.8-10.5 9.5-17.6 10.1S52 318 47 313L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l19.8 19.8 39.6-56.6c7.6-10.9 22.6-13.5 33.4-5.9zM224 96c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32l288 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32zM64 376a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg>
                         <p>Vérification des engins</p></a>
                 </div>
+
+                 <div class="separator"></div>
+
+                 <div class="nav-links">
+                    <div style="position: relative; display: inline-block;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" onclick="opensOverlay()" style="fill: white;">
+                            <path d="M240 192C240 147.8 275.8 112 320 112C364.2 112 400 147.8 400 192C400 236.2 364.2 272 320 272C275.8 272 240 236.2 240 192zM448 192C448 121.3 390.7 64 320 64C249.3 64 192 121.3 192 192C192 262.7 249.3 320 320 320C390.7 320 448 262.7 448 192zM144 544C144 473.3 201.3 416 272 416L368 416C438.7 416 496 473.3 496 544L496 552C496 565.3 506.7 576 520 576C533.3 576 544 565.3 544 552L544 544C544 446.8 465.2 368 368 368L272 368C174.8 368 96 446.8 96 544L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 544z"/>
+                        </svg>
+
+                        <div class="overlay-action-user" id="overlay_action_user">
+                            @if(session('isAdmin') or session('isAdminChief'))
+                                @if(session('mode') == "user")
+                                    <a href="{{ route('admin.index') }}">Passer en mode Admin</a>
+                                @else
+                                    <a href="{{ route('home') }}">Passer en mode Utili.</a>
+                                @endif
+                            @endif
+                            <a href="{{ route('logout') }}">Déconnexion</a>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function opensOverlay(){
+                        let overlay = document.getElementById("overlay_action_user");
+                        overlay.classList.toggle("visible");
+                    }
+                </script>
             </div>
 
         @endif

@@ -64,7 +64,7 @@ class AttributionController extends Controller
         return redirect()->back();
     }
 
-    public function editItemContaining($containing_id, $item_id)
+    public function editItemContaining(Request $request, $containing_id, $item_id)
     {
         $matricule = $request->session()->get("matricule");
         $code = $request->session()->get("code");
@@ -151,7 +151,7 @@ class AttributionController extends Controller
         return redirect()->route('admin.attribution.index')->with('success', 'Containing associé à la source avec succès !');
     }
 
-    public function editContainingSource($containing_id, $source_id)
+    public function editContainingSource(Request $request, $containing_id, $source_id)
     {
         $matricule = $request->session()->get("matricule");
         $code = $request->session()->get("code");
@@ -185,7 +185,7 @@ class AttributionController extends Controller
         return redirect()->route('admin.attribution.index')->with('success', 'Source mise à jour avec succès !');
     }
 
-    public function ContainingSourceDelete($containing_id)
+    public function ContainingSourceDelete(Request $request, $containing_id)
     {
         $matricule = $request->session()->get("matricule");
         $code = $request->session()->get("code");
