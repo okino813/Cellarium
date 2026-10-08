@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    @PwaHead
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cellarium - Pharmacie</title>
@@ -11,6 +10,5 @@
 </head>
 <body>
 @inertia
-@RegisterServiceWorkerScript
 </body>
 </html>

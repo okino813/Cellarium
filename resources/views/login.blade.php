@@ -4,6 +4,7 @@
     <div class="container">
         <div class="card" style="max-width: 500px; margin: 50px auto; padding: 20px;">
             <h1 class="text-center">Connexion</h1>
+            <p>Petit test pas piquer des annetons</p>
             <p class="text-center" style="margin-bottom: 30px;">
                 Veuillez entrer votre code caserne pour accéder au suivi de stock.
             </p>
