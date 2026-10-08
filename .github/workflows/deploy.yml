@@ -6,78 +6,67 @@ on:
 
 jobs:
   deploy:
-    # 👈 Uses your self-hosted runner on O2switch
-    runs-on: self-hosted
-    
+    runs-on: ubuntu-latest
     env:
       APP_ENV: production
       APP_DEBUG: false
-    
     steps:
-      # ────────────────────────────────────────
-      # 1. Checkout code
-      # ────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      # ────────────────────────────────────────
-      # 2. Setup SSH Key (so rsync can connect)
-      # ────────────────────────────────────────
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'   # à aligner sur la version PHP du site sur O2switch
+          tools: composer
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
-          
-      # ────────────────────────────────────────
-      # 3. Install PHP dependencies (production)
-      # ────────────────────────────────────────
+
       - name: Install PHP Dependencies
-        run: |
-          composer install --no-dev --optimize-autoloader
-          
-      # ────────────────────────────────────────
-      # 4. Install Node dependencies
-      # ────────────────────────────────────────
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
       - name: Install Node Dependencies
-        run: |
-          npm ci
-      
-      # ────────────────────────────────────────
-      # 5. Build frontend assets (React/Vite)
-      # ────────────────────────────────────────
+        run: npm ci
+
       - name: Build Frontend Assets
-        run: |
-          npm run build
-          # Alternative for Laravel Mix: npm run production
-        
-      # ────────────────────────────────────────
-      # 6. Copy public/assets to server via SSH/rsync
-      # ────────────────────────────────────────
+        run: npm run build
+
       - name: Sync Files to O2switch
         run: |
-          rsync -avz --delete \
+          rsync -az --delete \
             --exclude='.git' \
+            --exclude='.github' \
             --exclude='node_modules' \
             --exclude='.env' \
-            --exclude='storage/app/private/*' \
-            --exclude='vendor/*' \
             --exclude='.env.*' \
+            --exclude='storage/' \
+            --exclude='bootstrap/cache/' \
+            --exclude='public/storage' \
+            --exclude='public/hot' \
             ./ \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/ \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
-            
-      # ────────────────────────────────────────
-      # 7. Run Laravel post-deployment tasks
-      # ────────────────────────────────────────
+            -e "ssh -i ~/.ssh/id_ed25519"
+
       - name: Run Artisan Commands (via SSH)
         run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+          ssh -i ~/.ssh/id_ed25519 \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          set -e
           cd ${{ secrets.DEPLOY_PATH }}
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
+          php artisan down --retry=60 || true
+          php artisan migrate --force
           php artisan optimize:clear
+          php artisan optimize
+          php artisan up
           EOF
