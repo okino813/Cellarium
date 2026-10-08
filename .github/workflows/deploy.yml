@@ -1,0 +1,83 @@
+name: Deploy Laravel + Inertia to O2switch
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    # 👈 Uses your self-hosted runner on O2switch
+    runs-on: self-hosted
+    
+    env:
+      APP_ENV: production
+      APP_DEBUG: false
+    
+    steps:
+      # ────────────────────────────────────────
+      # 1. Checkout code
+      # ────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      # ────────────────────────────────────────
+      # 2. Setup SSH Key (so rsync can connect)
+      # ────────────────────────────────────────
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+          
+      # ────────────────────────────────────────
+      # 3. Install PHP dependencies (production)
+      # ────────────────────────────────────────
+      - name: Install PHP Dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader
+          
+      # ────────────────────────────────────────
+      # 4. Install Node dependencies
+      # ────────────────────────────────────────
+      - name: Install Node Dependencies
+        run: |
+          npm ci
+      
+      # ────────────────────────────────────────
+      # 5. Build frontend assets (React/Vite)
+      # ────────────────────────────────────────
+      - name: Build Frontend Assets
+        run: |
+          npm run build
+          # Alternative for Laravel Mix: npm run production
+        
+      # ────────────────────────────────────────
+      # 6. Copy public/assets to server via SSH/rsync
+      # ────────────────────────────────────────
+      - name: Sync Files to O2switch
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='.env' \
+            --exclude='storage/app/private/*' \
+            --exclude='vendor/*' \
+            --exclude='.env.*' \
+            ./ \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/ \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
+            
+      # ────────────────────────────────────────
+      # 7. Run Laravel post-deployment tasks
+      # ────────────────────────────────────────
+      - name: Run Artisan Commands (via SSH)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH }}
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          php artisan optimize:clear
+          EOF
