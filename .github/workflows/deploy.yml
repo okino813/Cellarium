@@ -1,72 +1,34 @@
-name: Deploy Laravel + Inertia to O2switch
+name: Deploy Cellarium
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    env:
-      APP_ENV: production
-      APP_DEBUG: false
+    runs-on: self-hosted
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'   # à aligner sur la version PHP du site sur O2switch
-          tools: composer
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
-
-      - name: Setup SSH Key
+      - name: Sync code to app directory
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
-
-      - name: Install PHP Dependencies
-        run: composer install --no-dev --optimize-autoloader --no-interaction
-
-      - name: Install Node Dependencies
-        run: npm ci
-
-      - name: Build Frontend Assets
-        run: npm run build
-
-      - name: Sync Files to O2switch
-        run: |
-          rsync -az --delete \
+          rsync -a --delete \
             --exclude='.git' \
             --exclude='.github' \
-            --exclude='node_modules' \
             --exclude='.env' \
-            --exclude='.env.*' \
-            --exclude='storage/' \
-            --exclude='bootstrap/cache/' \
-            --exclude='public/storage' \
-            --exclude='public/hot' \
-            ./ \
-            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/ \
-            -e "ssh -i ~/.ssh/id_ed25519"
+            --exclude='dump.sql' \
+            --exclude='compose.prod.yaml' \
+            ./ "$HOME/apps/cellarium-test/"
 
-      - name: Run Artisan Commands (via SSH)
+      - name: Rebuild and restart
         run: |
-          ssh -i ~/.ssh/id_ed25519 \
-            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
-          set -e
-          cd ${{ secrets.DEPLOY_PATH }}
-          php artisan down --retry=60 || true
-          php artisan migrate --force
-          php artisan optimize:clear
-          php artisan optimize
-          php artisan up
-          EOF
+          cd "$HOME/apps/cellarium-test"
+          docker compose -f compose.prod.yaml up -d --build
+
+      - name: Laravel post-deploy
+        run: |
+          cd "$HOME/apps/cellarium-test"
+          docker compose -f compose.prod.yaml exec -T app php artisan migrate --force
+          docker compose -f compose.prod.yaml exec -T app php artisan optimize:clear
+          docker compose -f compose.prod.yaml exec -T app php artisan optimize
