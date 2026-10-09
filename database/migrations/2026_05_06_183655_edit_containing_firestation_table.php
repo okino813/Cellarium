@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasColumn('containings', 'firestation_id')) {
+            Schema::table('containings', function (Blueprint $table) {
+                $table->unsignedBigInteger('firestation_id')->nullable()->after('source_id');
+            });
+        }
+
         Schema::table('containings', function (Blueprint $table) {
             $table->foreign('firestation_id')->references('id')->on('firestations');
         });
     }
-
     /**
      * Reverse the migrations.
      */
