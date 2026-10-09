@@ -25,7 +25,7 @@ Route::middleware([isLogin::class])->group(function (){
     Route::post('/verif/update-qty/{id}', [VerifController::class, 'updateQty'])->name("front.verif.updateQty");
     Route::post('/verif/show/validate/{id}', [VerifController::class, 'validate'])->name("front.verif.validate");
 
-    Route::post('/logout', [LoginController::class, 'logout'])->name("logout");
+    // Route::post('/logout', [LoginController::class, 'logout'])->name("logout");
     Route::get('/logout', [LoginController::class, 'logout'])->name("logout");
 });
 
