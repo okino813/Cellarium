@@ -28,11 +28,6 @@ class VerifController extends Controller
         $caserne = Firestation::where('code', $code)->first();
         $user = User::where('matricule', $matricule)->where("firestation_id", $caserne->id)->first();
 
-        // dd($request->sucess);
-        if($request->success){
-            dd("pAse");
-        }
-
         $sources = Source::where("firestation_id", $user->firestation_id)->where("firestation_id", $user->firestation_id)->get();
 
         return Inertia::render('Front/verif/Index', [
