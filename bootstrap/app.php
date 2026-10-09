@@ -28,6 +28,8 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('admin.login');  // Pour la partie web → redirige vers login
         });
+
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, $request) {
